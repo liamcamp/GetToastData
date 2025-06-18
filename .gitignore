@@ -35,4 +35,8 @@ ENV/
 .idea/
 .vscode/
 *.swp
-*.swo 
+*.swo
+
+# Large data files
+raw.json
+*.log 

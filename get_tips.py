@@ -160,6 +160,60 @@ except ImportError:
         )
         raise
 
+def get_employee_mapping():
+    """
+    Fetch all employees from Toast API and create a mapping from GUID to name.
+    
+    Returns:
+        Dictionary mapping employee GUIDs to names
+    """
+    try:
+        client = ToastAPIClient()
+        logger.info("Fetching all employees from Toast API...")
+        
+        # Fetch all employees (no GUID parameter)
+        employees_response = client.get_employee(None)
+        
+        # Extract employees from response
+        if isinstance(employees_response, list):
+            employees = employees_response
+        elif isinstance(employees_response, dict) and 'employees' in employees_response:
+            employees = employees_response['employees']
+        else:
+            logger.warning("Unexpected employee API response structure")
+            return {}
+        
+        # Create mapping from GUID to employee info (name and externalEmployeeId)
+        employee_mapping = {}
+        for employee in employees:
+            if isinstance(employee, dict) and 'guid' in employee:
+                guid = employee['guid']
+                first_name = employee.get('firstName', '')
+                last_name = employee.get('lastName', '')
+                chosen_name = employee.get('chosenName', '')
+                external_employee_id = employee.get('externalEmployeeId', '')
+                
+                # Use chosen name if available, otherwise first + last
+                if chosen_name:
+                    full_name = chosen_name
+                else:
+                    full_name = f"{first_name} {last_name}".strip()
+                    if not full_name:
+                        full_name = f"Employee {guid[-8:]}"
+                
+                employee_mapping[guid] = {
+                    'name': full_name,
+                    'externalEmployeeId': external_employee_id
+                }
+        
+        logger.info(f"Successfully mapped {len(employee_mapping)} employees")
+        return employee_mapping
+        
+    except Exception as e:
+        logger.error(f"Failed to fetch employees from API: {e}")
+        logger.warning("Falling back to server_map.json if available")
+        return {}
+
 def process_tips_data(orders_data, location_index=None, date_range=None):
     """
     Process orders data to extract tips per day and sales per server.
@@ -183,10 +237,31 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
     else:
         logger.info(f"Using provided location index: {location_index}")
     
+    # First try to get employee mapping from API
+    server_guid_to_name = get_employee_mapping()
+    
+    # If API failed, fall back to server_map.json
+    if not server_guid_to_name:
+        try:
+            server_map_path = os.path.join(os.path.dirname(__file__), 'server_map.json')
+            with open(server_map_path, 'r') as f:
+                server_map = json.load(f)
+                # Extract servers mapping from oj_wl location
+                if 'oj_wl' in server_map and 'servers' in server_map['oj_wl']:
+                    server_guid_to_name = server_map['oj_wl']['servers']
+                    logger.info(f"Loaded {len(server_guid_to_name)} server mappings from server_map.json")
+                else:
+                    logger.warning("No server mappings found in server_map.json under oj_wl.servers")
+        except FileNotFoundError:
+            logger.warning("server_map.json not found, using default server names")
+        except json.JSONDecodeError as e:
+            logger.error(f"Error parsing server_map.json: {e}")
+        except Exception as e:
+            logger.error(f"Unexpected error loading server_map.json: {e}")
+    
     # Initialize data structures
     tips_by_date = defaultdict(float)
     sales_by_server = defaultdict(float)
-    server_guid_to_name = {}  # Store server GUID to name mapping if available
     
     # Track processing statistics
     total_orders_processed = 0
@@ -255,11 +330,6 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
                     server_guid = server_info.get('guid')
                     if server_guid:
                         sales_by_server[server_guid] += payment_amount
-                        
-                        # Store server name if available (though it's not in the sample)
-                        # This could be expanded if server names are available in the API response
-                        if server_guid not in server_guid_to_name:
-                            server_guid_to_name[server_guid] = f"Server_{server_guid[-8:]}"  # Use last 8 chars as identifier
         
         if order_has_tips:
             orders_with_tips += 1
@@ -268,12 +338,23 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
     tips_by_date_sorted = dict(sorted(tips_by_date.items()))
     sales_by_server_sorted = dict(sorted(sales_by_server.items()))
     
-    # Create server summary with names
+    # Create server summary with names and external employee IDs
     server_summary = []
     for server_guid, total_sales in sales_by_server_sorted.items():
+        # Handle both old string format and new dict format for backward compatibility
+        if isinstance(server_guid_to_name.get(server_guid), dict):
+            server_info = server_guid_to_name[server_guid]
+            server_name = server_info['name']
+            external_employee_id = server_info['externalEmployeeId']
+        else:
+            # Fallback for old format or server_map.json
+            server_name = server_guid_to_name.get(server_guid, f"Unknown Server ({server_guid[-8:]})")
+            external_employee_id = ""
+        
         server_summary.append({
             'server_guid': server_guid,
-            'server_name': server_guid_to_name.get(server_guid, f"Server_{server_guid[-8:]}"),
+            'server_name': server_name,
+            'external_employee_id': external_employee_id,
             'total_sales': round(total_sales, 2)
         })
     
@@ -486,7 +567,8 @@ def main():
         logger.info("=" * 80)
         
         for server in processed_data['sales_by_server']:
-            logger.info(f"{server['server_name']} ({server['server_guid']}): ${server['total_sales']:.2f}")
+            external_id_info = f" [ID: {server['external_employee_id']}]" if server['external_employee_id'] else ""
+            logger.info(f"{server['server_name']} ({server['server_guid']}){external_id_info}: ${server['total_sales']:.2f}")
         
         logger.info(f"\nTotal Server Sales: ${processed_data['summary']['total_server_sales']:.2f}")
         

@@ -38299,3 +38299,649 @@ Processing 2025-05-16...
 2025-06-17 22:34:22,040 - toast-orders - INFO - Raw orders data with basic aggregates saved to raw.json
 2025-06-17 22:34:22,040 - toast-orders - INFO - Operation completed successfully.
 2025-06-17 22:34:22,040 - toast-orders - INFO - ================================================================================
+2025-06-18 14:35:47,556 - toast-orders - INFO - Setting location index to 5
+2025-06-18 14:35:47,557 - toast-orders - INFO - ================================================================================
+2025-06-18 14:35:47,557 - toast-orders - INFO - Toast Orders API Script - Started at 2025-06-18 14:35:47
+2025-06-18 14:35:47,557 - toast-orders - INFO - ================================================================================
+2025-06-18 14:35:47,557 - toast-orders - INFO - Using location index from environment: 5
+2025-06-18 14:35:47,557 - toast-orders - INFO - Explicitly setting TOAST_LOCATION_INDEX to 5 before client initialization
+2025-06-18 14:35:47,557 - toast-orders - INFO - Initializing Toast API client...
+2025-06-18 14:35:47,559 - toast-config - INFO - Config module loaded. Raw TOAST_LOCATION_INDEX from environment: '5'
+2025-06-18 14:35:47,559 - toast-config - INFO - Parsed location_index as integer: 5
+2025-06-18 14:35:47,559 - toast-config - INFO - Using TOAST_RESTAURANT_GUID: 2437b9ff-00d5-4cec-b629-704f72e5f5ae from LOCATION_GUID_MAP for location index 5
+2025-06-18 14:35:47,559 - toast-config - INFO - Config module initialized successfully with TOAST_RESTAURANT_GUID: 2437b9ff-00d5-4cec-b629-704f72e5f5ae
+2025-06-18 14:35:47,559 - toast-client - INFO - Initializing Toast API client with restaurant GUID: 2437b9ff-00d5-4cec-b629-704f72e5f5ae
+2025-06-18 14:35:47,559 - toast-client - INFO - Attempting to fetch new authentication token from Toast API...
+2025-06-18 14:35:47,559 - toast-client - INFO - Using auth URL: https://ws-api.toasttab.com/authentication/v1/authentication/login
+2025-06-18 14:35:47,559 - toast-client - INFO - Authentication attempt 1/6. Payload: {
+  "clientId": "xaxrS3eVpsfmynTJSuTFcdv2VgY8bF06",
+  "clientSecret": "bWSQaHXKqAi8cn5MjsMBxWKdwQj6XyWcKsYJvPchX4dNHCrJyCDkdeS9gzXkzvIJ",
+  "userAccessType": "TOAST_MACHINE_CLIENT"
+}
+2025-06-18 14:35:47,967 - toast-client - INFO - Auth response status: 200
+2025-06-18 14:35:47,967 - toast-client - INFO - Auth token response keys: @class, token, status
+2025-06-18 14:35:47,968 - toast-client - INFO - Successfully retrieved new token, valid until: 2025-06-19 12:26:13
+2025-06-18 14:35:47,970 - toast-orders - INFO - Config module imported, TOAST_RESTAURANT_GUID: 2437b9ff-00d5-4cec-b629-704f72e5f5ae
+2025-06-18 14:35:47,970 - toast-orders - INFO - Config module LOCATION_GUID_MAP: {1: '8a3b1856-f4ed-4f13-8f64-6349fbffe1f1', 2: '424bca99-0858-4c55-9fe6-ba3936f2fe1b', 3: '09017aed-dc03-494c-a1b1-cbb0b71a0141', 4: '2058e275-2eff-4cf0-8eeb-12001129d782', 5: '2437b9ff-00d5-4cec-b629-704f72e5f5ae'}
+2025-06-18 14:35:47,970 - toast-orders - INFO - Using restaurant GUID: 2437b9ff-00d5-4cec-b629-704f72e5f5ae for location index 5
+2025-06-18 14:35:47,970 - toast-orders - INFO - Confirmed using correct GUID for location 5
+2025-06-18 14:35:47,972 - toast-orders - INFO - Processing orders from 2024-06-01 to 2024-06-01...
+2025-06-18 14:35:47,972 - toast-orders - INFO - Will process 1 days individually...
+2025-06-18 14:35:47,972 - toast-orders - INFO - 
+Processing 2024-06-01...
+2025-06-18 14:35:47,972 - toast-client - INFO - Single day request - Using businessDate: 20240601
+2025-06-18 14:35:47,973 - toast-client - INFO - Starting pagination to fetch all orders...
+2025-06-18 14:35:47,973 - toast-client - INFO - Fetching page 1 with 100 items per page using businessDate parameter...
+2025-06-18 14:35:47,973 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 14:35:47,973 - toast-client - INFO - Request method: GET
+2025-06-18 14:35:47,973 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 2437b9ff-00d5-4cec-b629-704f72e5f5ae
+2025-06-18 14:35:47,973 - toast-client - INFO - Request parameters: {
+  "businessDate": "20240601",
+  "page": "1",
+  "pageSize": "100"
+}
+2025-06-18 14:35:47,973 - toast-client - INFO - Request data: None
+2025-06-18 14:35:47,973 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 14:35:51,332 - toast-client - INFO - Response status: 200
+2025-06-18 14:35:51,363 - toast-client - INFO - Received list with 100 orders for page 1
+2025-06-18 14:35:51,363 - toast-client - INFO - Moving to page 2...
+2025-06-18 14:35:51,868 - toast-client - INFO - Fetching page 2 with 100 items per page using businessDate parameter...
+2025-06-18 14:35:51,869 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 14:35:51,869 - toast-client - INFO - Request method: GET
+2025-06-18 14:35:51,869 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 2437b9ff-00d5-4cec-b629-704f72e5f5ae
+2025-06-18 14:35:51,869 - toast-client - INFO - Request parameters: {
+  "businessDate": "20240601",
+  "page": "2",
+  "pageSize": "100"
+}
+2025-06-18 14:35:51,869 - toast-client - INFO - Request data: None
+2025-06-18 14:35:51,869 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 14:35:55,266 - toast-client - INFO - Response status: 200
+2025-06-18 14:35:55,305 - toast-client - INFO - Received list with 100 orders for page 2
+2025-06-18 14:35:55,306 - toast-client - INFO - Moving to page 3...
+2025-06-18 14:35:55,811 - toast-client - INFO - Fetching page 3 with 100 items per page using businessDate parameter...
+2025-06-18 14:35:55,812 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 14:35:55,812 - toast-client - INFO - Request method: GET
+2025-06-18 14:35:55,813 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 2437b9ff-00d5-4cec-b629-704f72e5f5ae
+2025-06-18 14:35:55,814 - toast-client - INFO - Request parameters: {
+  "businessDate": "20240601",
+  "page": "3",
+  "pageSize": "100"
+}
+2025-06-18 14:35:55,814 - toast-client - INFO - Request data: None
+2025-06-18 14:35:55,814 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 14:35:58,874 - toast-client - INFO - Response status: 200
+2025-06-18 14:35:58,909 - toast-client - INFO - Received list with 100 orders for page 3
+2025-06-18 14:35:58,910 - toast-client - INFO - Moving to page 4...
+2025-06-18 14:35:59,415 - toast-client - INFO - Fetching page 4 with 100 items per page using businessDate parameter...
+2025-06-18 14:35:59,415 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 14:35:59,415 - toast-client - INFO - Request method: GET
+2025-06-18 14:35:59,415 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 2437b9ff-00d5-4cec-b629-704f72e5f5ae
+2025-06-18 14:35:59,415 - toast-client - INFO - Request parameters: {
+  "businessDate": "20240601",
+  "page": "4",
+  "pageSize": "100"
+}
+2025-06-18 14:35:59,415 - toast-client - INFO - Request data: None
+2025-06-18 14:35:59,415 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 14:36:02,540 - toast-client - INFO - Response status: 200
+2025-06-18 14:36:02,577 - toast-client - INFO - Received list with 100 orders for page 4
+2025-06-18 14:36:02,577 - toast-client - INFO - Moving to page 5...
+2025-06-18 14:36:03,088 - toast-client - INFO - Fetching page 5 with 100 items per page using businessDate parameter...
+2025-06-18 14:36:03,088 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 14:36:03,088 - toast-client - INFO - Request method: GET
+2025-06-18 14:36:03,088 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 2437b9ff-00d5-4cec-b629-704f72e5f5ae
+2025-06-18 14:36:03,088 - toast-client - INFO - Request parameters: {
+  "businessDate": "20240601",
+  "page": "5",
+  "pageSize": "100"
+}
+2025-06-18 14:36:03,089 - toast-client - INFO - Request data: None
+2025-06-18 14:36:03,089 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 14:36:05,836 - toast-client - INFO - Response status: 200
+2025-06-18 14:36:05,866 - toast-client - INFO - Received list with 100 orders for page 5
+2025-06-18 14:36:05,866 - toast-client - INFO - Moving to page 6...
+2025-06-18 14:36:06,369 - toast-client - INFO - Fetching page 6 with 100 items per page using businessDate parameter...
+2025-06-18 14:36:06,370 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 14:36:06,370 - toast-client - INFO - Request method: GET
+2025-06-18 14:36:06,370 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 2437b9ff-00d5-4cec-b629-704f72e5f5ae
+2025-06-18 14:36:06,370 - toast-client - INFO - Request parameters: {
+  "businessDate": "20240601",
+  "page": "6",
+  "pageSize": "100"
+}
+2025-06-18 14:36:06,371 - toast-client - INFO - Request data: None
+2025-06-18 14:36:06,371 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 14:36:08,590 - toast-client - INFO - Response status: 200
+2025-06-18 14:36:08,625 - toast-client - INFO - Received list with 94 orders for page 6
+2025-06-18 14:36:08,626 - toast-client - INFO - Reached end of data with 94 items on page 6
+2025-06-18 14:36:08,626 - toast-client - INFO - Successfully fetched a total of 594 orders across 6 pages
+2025-06-18 14:36:08,626 - toast-orders - INFO - Retrieved 594 orders for 2024-06-01
+2025-06-18 14:36:08,626 - toast-orders - INFO - Using provided location index: 5
+2025-06-18 14:36:08,635 - toast-orders - INFO - Processed data into 309 unique menu items across 9 categories
+2025-06-18 14:36:08,635 - toast-orders - INFO - Excluded 9 voided items from totals
+2025-06-18 14:36:08,635 - toast-orders - INFO - Excluded 15 gift card items from totals
+2025-06-18 14:36:08,635 - toast-orders - INFO - Total discounts applied: $1582.61
+2025-06-18 14:36:08,635 - toast-orders - INFO - Total sales after discounts (Net Sales): $64818.79
+2025-06-18 14:36:08,635 - toast-orders - INFO - Total non-gratuity service charges: $0.00
+2025-06-18 14:36:08,635 - toast-orders - INFO - Total sales (net sales + discounts): $66401.40
+2025-06-18 14:36:08,635 - toast-orders - INFO - Location index: 5
+2025-06-18 14:36:08,635 - toast-orders - INFO - 
+================================================================================
+2025-06-18 14:36:08,635 - toast-orders - INFO - SALES AGGREGATES BY CATEGORY (Excluding Voided Items)
+2025-06-18 14:36:08,635 - toast-orders - INFO - ================================================================================
+2025-06-18 14:36:08,635 - toast-orders - INFO - Food: $50535.44 (2141.0 items) - Discounts: $1294.11 - Service Charges: $0.00 - Total: $51829.55
+2025-06-18 14:36:08,635 - toast-orders - INFO - Draft Beer: $0.00 (0 items) - Service Charges: $0.00 - Total: $0.00
+2025-06-18 14:36:08,636 - toast-orders - INFO - Bottled Beer: $0.00 (0 items) - Service Charges: $0.00 - Total: $0.00
+2025-06-18 14:36:08,636 - toast-orders - INFO - Wine: $0.00 (0 items) - Service Charges: $0.00 - Total: $0.00
+2025-06-18 14:36:08,636 - toast-orders - INFO - Liquor: $7406.60 (573.0 items) - Discounts: $190.00 - Service Charges: $0.00 - Total: $7596.60
+2025-06-18 14:36:08,636 - toast-orders - INFO - NA Beverage: $1463.25 (554.0 items) - Discounts: $55.00 - Service Charges: $0.00 - Total: $1518.25
+2025-06-18 14:36:08,636 - toast-orders - INFO - Corkage Fee: $100.00 (5.0 items) - Service Charges: $0.00 - Total: $100.00
+2025-06-18 14:36:08,636 - toast-orders - INFO - Other: $0.00 (32.0 items) - Service Charges: $0.00 - Total: $0.00
+2025-06-18 14:36:08,636 - toast-orders - INFO - --------------------------------------------------------------------------------
+2025-06-18 14:36:08,636 - toast-orders - INFO - TOTAL SALES: $61044.40 (TOTAL ITEMS: 3305.0)
+2025-06-18 14:36:08,636 - toast-orders - INFO - NET SALES: $59505.29
+2025-06-18 14:36:08,636 - toast-orders - INFO - TOTAL DISCOUNTS: $1539.11
+2025-06-18 14:36:08,636 - toast-orders - INFO - TOTAL SERVICE CHARGES: $0.00
+2025-06-18 14:36:08,636 - toast-orders - INFO - FINAL TOTAL (net - service charges + discounts): $61044.40
+2025-06-18 14:36:08,636 - toast-orders - INFO - ================================================================================
+2025-06-18 14:36:08,636 - toast-orders - INFO - Date Range: 2024-06-01 to 2024-06-01
+2025-06-18 14:36:08,636 - toast-orders - INFO - 
+================================================================================
+2025-06-18 14:36:08,636 - toast-orders - INFO - IMPORTANT NOTES ABOUT DATA
+2025-06-18 14:36:08,636 - toast-orders - INFO - ================================================================================
+2025-06-18 14:36:08,636 - toast-orders - INFO - This output contains raw data with the following processing:
+2025-06-18 14:36:08,636 - toast-orders - INFO - - Excluded 9 voided items
+2025-06-18 14:36:08,636 - toast-orders - INFO - - Discounts have been calculated and shown separately
+2025-06-18 14:36:08,636 - toast-orders - INFO - - No modifiers have been added to prices
+2025-06-18 14:36:08,636 - toast-orders - INFO - - Raw item prices × quantities are used
+2025-06-18 14:36:08,636 - toast-orders - INFO - ================================================================================
+2025-06-18 14:36:08,636 - toast-orders - INFO - COMPREHENSIVE ITEMS LIST: 309 unique items ordered
+2025-06-18 14:36:08,636 - toast-orders - INFO - ----------------------------------------
+2025-06-18 14:36:08,636 - toast-orders - INFO - Sample items:
+2025-06-18 14:36:08,636 - toast-orders - INFO -   House Salad: 29 units, $384.60 total, $13.95 discounts
+2025-06-18 14:36:08,636 - toast-orders - INFO -   REFILL !!!: 118 units, $0.00 total
+2025-06-18 14:36:08,636 - toast-orders - INFO -   Side Spaghetti: 18 units, $142.75 total, $26.85 discounts
+2025-06-18 14:36:08,636 - toast-orders - INFO -   Diet Coke: 51 units, $153.00 total
+2025-06-18 14:36:08,636 - toast-orders - INFO -   Lemonade: 23 units, $80.50 total
+2025-06-18 14:36:08,636 - toast-orders - INFO -   ... and 304 more items
+2025-06-18 14:36:08,636 - toast-orders - INFO - ----------------------------------------
+2025-06-18 14:36:08,636 - toast-orders - INFO - The complete items list will be included in output file and/or webhook data.
+2025-06-18 14:36:08,636 - toast-orders - INFO - ========================================
+2025-06-18 14:36:09,330 - toast-orders - INFO - Raw orders data with basic aggregates saved to test.json
+2025-06-18 14:36:09,330 - toast-orders - INFO - Operation completed successfully.
+2025-06-18 14:36:09,330 - toast-orders - INFO - ================================================================================
+2025-06-18 15:12:12,037 - toast-orders - INFO - Setting location index to 1
+2025-06-18 15:12:12,037 - toast-orders - INFO - ================================================================================
+2025-06-18 15:12:12,037 - toast-orders - INFO - Toast Orders API Script - Started at 2025-06-18 15:12:12
+2025-06-18 15:12:12,037 - toast-orders - INFO - ================================================================================
+2025-06-18 15:12:12,037 - toast-orders - INFO - Using location index from environment: 1
+2025-06-18 15:12:12,037 - toast-orders - INFO - Explicitly setting TOAST_LOCATION_INDEX to 1 before client initialization
+2025-06-18 15:12:12,037 - toast-orders - INFO - Initializing Toast API client...
+2025-06-18 15:12:12,039 - toast-config - INFO - Config module loaded. Raw TOAST_LOCATION_INDEX from environment: '1'
+2025-06-18 15:12:12,039 - toast-config - INFO - Parsed location_index as integer: 1
+2025-06-18 15:12:12,039 - toast-config - INFO - Using TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1 from LOCATION_GUID_MAP for location index 1
+2025-06-18 15:12:12,039 - toast-config - INFO - Config module initialized successfully with TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-18 15:12:12,039 - toast-client - INFO - Initializing Toast API client with restaurant GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-18 15:12:12,039 - toast-client - INFO - Attempting to fetch new authentication token from Toast API...
+2025-06-18 15:12:12,039 - toast-client - INFO - Using auth URL: https://ws-api.toasttab.com/authentication/v1/authentication/login
+2025-06-18 15:12:12,039 - toast-client - INFO - Authentication attempt 1/6. Payload: {
+  "clientId": "xaxrS3eVpsfmynTJSuTFcdv2VgY8bF06",
+  "clientSecret": "bWSQaHXKqAi8cn5MjsMBxWKdwQj6XyWcKsYJvPchX4dNHCrJyCDkdeS9gzXkzvIJ",
+  "userAccessType": "TOAST_MACHINE_CLIENT"
+}
+2025-06-18 15:12:12,721 - toast-client - INFO - Auth response status: 200
+2025-06-18 15:12:12,722 - toast-client - INFO - Auth token response keys: @class, token, status
+2025-06-18 15:12:12,722 - toast-client - INFO - Successfully retrieved new token, valid until: 2025-06-19 12:26:14
+2025-06-18 15:12:12,725 - toast-orders - INFO - Config module imported, TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-18 15:12:12,725 - toast-orders - INFO - Config module LOCATION_GUID_MAP: {1: '8a3b1856-f4ed-4f13-8f64-6349fbffe1f1', 2: '424bca99-0858-4c55-9fe6-ba3936f2fe1b', 3: '09017aed-dc03-494c-a1b1-cbb0b71a0141', 4: '2058e275-2eff-4cf0-8eeb-12001129d782', 5: '2437b9ff-00d5-4cec-b629-704f72e5f5ae'}
+2025-06-18 15:12:12,725 - toast-orders - INFO - Using restaurant GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1 for location index 1
+2025-06-18 15:12:12,725 - toast-orders - INFO - Confirmed using correct GUID for location 1
+2025-06-18 15:12:12,728 - toast-orders - INFO - Processing orders from 2025-06-01 to 2025-06-02...
+2025-06-18 15:12:12,728 - toast-orders - INFO - Will process 2 days individually...
+2025-06-18 15:12:12,728 - toast-orders - INFO - 
+Processing 2025-06-01...
+2025-06-18 15:12:12,728 - toast-client - INFO - Single day request - Using businessDate: 20250601
+2025-06-18 15:12:12,728 - toast-client - INFO - Starting pagination to fetch all orders...
+2025-06-18 15:12:12,728 - toast-client - INFO - Fetching page 1 with 100 items per page using businessDate parameter...
+2025-06-18 15:12:12,728 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:12,728 - toast-client - INFO - Request method: GET
+2025-06-18 15:12:12,728 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-18 15:12:12,728 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250601",
+  "page": "1",
+  "pageSize": "100"
+}
+2025-06-18 15:12:12,728 - toast-client - INFO - Request data: None
+2025-06-18 15:12:12,728 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:15,775 - toast-client - INFO - Response status: 200
+2025-06-18 15:12:15,801 - toast-client - INFO - Received list with 100 orders for page 1
+2025-06-18 15:12:15,801 - toast-client - INFO - Moving to page 2...
+2025-06-18 15:12:16,307 - toast-client - INFO - Fetching page 2 with 100 items per page using businessDate parameter...
+2025-06-18 15:12:16,308 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:16,308 - toast-client - INFO - Request method: GET
+2025-06-18 15:12:16,308 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-18 15:12:16,309 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250601",
+  "page": "2",
+  "pageSize": "100"
+}
+2025-06-18 15:12:16,309 - toast-client - INFO - Request data: None
+2025-06-18 15:12:16,309 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:19,102 - toast-client - INFO - Response status: 200
+2025-06-18 15:12:19,129 - toast-client - INFO - Received list with 100 orders for page 2
+2025-06-18 15:12:19,129 - toast-client - INFO - Moving to page 3...
+2025-06-18 15:12:19,636 - toast-client - INFO - Fetching page 3 with 100 items per page using businessDate parameter...
+2025-06-18 15:12:19,637 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:19,637 - toast-client - INFO - Request method: GET
+2025-06-18 15:12:19,637 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-18 15:12:19,637 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250601",
+  "page": "3",
+  "pageSize": "100"
+}
+2025-06-18 15:12:19,637 - toast-client - INFO - Request data: None
+2025-06-18 15:12:19,637 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:22,062 - toast-client - INFO - Response status: 200
+2025-06-18 15:12:22,075 - toast-client - INFO - Received list with 100 orders for page 3
+2025-06-18 15:12:22,075 - toast-client - INFO - Moving to page 4...
+2025-06-18 15:12:22,581 - toast-client - INFO - Fetching page 4 with 100 items per page using businessDate parameter...
+2025-06-18 15:12:22,581 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:22,581 - toast-client - INFO - Request method: GET
+2025-06-18 15:12:22,581 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-18 15:12:22,581 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250601",
+  "page": "4",
+  "pageSize": "100"
+}
+2025-06-18 15:12:22,581 - toast-client - INFO - Request data: None
+2025-06-18 15:12:22,581 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:23,796 - toast-client - INFO - Response status: 200
+2025-06-18 15:12:23,800 - toast-client - INFO - Received list with 19 orders for page 4
+2025-06-18 15:12:23,800 - toast-client - INFO - Reached end of data with 19 items on page 4
+2025-06-18 15:12:23,800 - toast-client - INFO - Successfully fetched a total of 319 orders across 4 pages
+2025-06-18 15:12:23,800 - toast-orders - INFO - Retrieved 319 orders for 2025-06-01
+2025-06-18 15:12:23,800 - toast-orders - INFO - 
+Processing 2025-06-02...
+2025-06-18 15:12:23,800 - toast-client - INFO - Single day request - Using businessDate: 20250602
+2025-06-18 15:12:23,800 - toast-client - INFO - Starting pagination to fetch all orders...
+2025-06-18 15:12:23,800 - toast-client - INFO - Fetching page 1 with 100 items per page using businessDate parameter...
+2025-06-18 15:12:23,801 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:23,801 - toast-client - INFO - Request method: GET
+2025-06-18 15:12:23,801 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-18 15:12:23,801 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250602",
+  "page": "1",
+  "pageSize": "100"
+}
+2025-06-18 15:12:23,801 - toast-client - INFO - Request data: None
+2025-06-18 15:12:23,801 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:26,290 - toast-client - INFO - Response status: 200
+2025-06-18 15:12:26,313 - toast-client - INFO - Received list with 100 orders for page 1
+2025-06-18 15:12:26,313 - toast-client - INFO - Moving to page 2...
+2025-06-18 15:12:26,819 - toast-client - INFO - Fetching page 2 with 100 items per page using businessDate parameter...
+2025-06-18 15:12:26,820 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:26,820 - toast-client - INFO - Request method: GET
+2025-06-18 15:12:26,820 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-18 15:12:26,821 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250602",
+  "page": "2",
+  "pageSize": "100"
+}
+2025-06-18 15:12:26,821 - toast-client - INFO - Request data: None
+2025-06-18 15:12:26,821 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:29,288 - toast-client - INFO - Response status: 200
+2025-06-18 15:12:29,314 - toast-client - INFO - Received list with 100 orders for page 2
+2025-06-18 15:12:29,314 - toast-client - INFO - Moving to page 3...
+2025-06-18 15:12:29,820 - toast-client - INFO - Fetching page 3 with 100 items per page using businessDate parameter...
+2025-06-18 15:12:29,821 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:29,821 - toast-client - INFO - Request method: GET
+2025-06-18 15:12:29,821 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-18 15:12:29,821 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250602",
+  "page": "3",
+  "pageSize": "100"
+}
+2025-06-18 15:12:29,821 - toast-client - INFO - Request data: None
+2025-06-18 15:12:29,821 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:32,142 - toast-client - INFO - Response status: 200
+2025-06-18 15:12:32,156 - toast-client - INFO - Received list with 100 orders for page 3
+2025-06-18 15:12:32,156 - toast-client - INFO - Moving to page 4...
+2025-06-18 15:12:32,661 - toast-client - INFO - Fetching page 4 with 100 items per page using businessDate parameter...
+2025-06-18 15:12:32,661 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:32,661 - toast-client - INFO - Request method: GET
+2025-06-18 15:12:32,661 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-18 15:12:32,662 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250602",
+  "page": "4",
+  "pageSize": "100"
+}
+2025-06-18 15:12:32,662 - toast-client - INFO - Request data: None
+2025-06-18 15:12:32,662 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-18 15:12:33,098 - toast-client - INFO - Response status: 200
+2025-06-18 15:12:33,102 - toast-client - INFO - Received list with 12 orders for page 4
+2025-06-18 15:12:33,102 - toast-client - INFO - Reached end of data with 12 items on page 4
+2025-06-18 15:12:33,102 - toast-client - INFO - Successfully fetched a total of 312 orders across 4 pages
+2025-06-18 15:12:33,102 - toast-orders - INFO - Retrieved 312 orders for 2025-06-02
+2025-06-18 15:12:33,102 - toast-orders - INFO - Using provided location index: 1
+2025-06-18 15:12:33,108 - toast-orders - INFO - Processed data into 241 unique menu items across 8 categories
+2025-06-18 15:12:33,108 - toast-orders - INFO - Excluded 11 voided items from totals
+2025-06-18 15:12:33,108 - toast-orders - INFO - Excluded 13 gift card items from totals
+2025-06-18 15:12:33,108 - toast-orders - INFO - Total discounts applied: $1586.25
+2025-06-18 15:12:33,108 - toast-orders - INFO - Total sales after discounts (Net Sales): $56351.05
+2025-06-18 15:12:33,108 - toast-orders - INFO - Total non-gratuity service charges: $2955.72
+2025-06-18 15:12:33,108 - toast-orders - INFO - Total sales (net sales + discounts): $57937.30
+2025-06-18 15:12:33,108 - toast-orders - INFO - Location index: 1
+2025-06-18 15:12:33,108 - toast-orders - INFO - 
+================================================================================
+2025-06-18 15:12:33,108 - toast-orders - INFO - SALES AGGREGATES BY CATEGORY (Excluding Voided Items)
+2025-06-18 15:12:33,108 - toast-orders - INFO - ================================================================================
+2025-06-18 15:12:33,108 - toast-orders - INFO - Food: $40280.15 (2080.0 items) - Discounts: $1126.00 - Service Charges: $2009.90 - Total: $41406.15
+2025-06-18 15:12:33,108 - toast-orders - INFO - Draft Beer: $642.00 (77.0 items) - Discounts: $14.00 - Service Charges: $38.52 - Total: $656.00
+2025-06-18 15:12:33,108 - toast-orders - INFO - Bottled Beer: $138.60 (23.0 items) - Service Charges: $7.56 - Total: $138.60
+2025-06-18 15:12:33,108 - toast-orders - INFO - Wine: $870.00 (52.0 items) - Service Charges: $52.20 - Total: $870.00
+2025-06-18 15:12:33,108 - toast-orders - INFO - Liquor: $12419.75 (760.0 items) - Discounts: $326.50 - Service Charges: $732.96 - Total: $12746.25
+2025-06-18 15:12:33,108 - toast-orders - INFO - NA Beverage: $1971.55 (353.0 items) - Discounts: $119.75 - Service Charges: $112.85 - Total: $2091.30
+2025-06-18 15:12:33,108 - toast-orders - INFO - Corkage Fee: $25.00 (1.0 items) - Service Charges: $1.50 - Total: $25.00
+2025-06-18 15:12:33,108 - toast-orders - INFO - Other: $4.00 (3.0 items) - Service Charges: $0.24 - Total: $4.00
+2025-06-18 15:12:33,108 - toast-orders - INFO - --------------------------------------------------------------------------------
+2025-06-18 15:12:33,108 - toast-orders - INFO - TOTAL SALES: $57937.30 (TOTAL ITEMS: 3349.0)
+2025-06-18 15:12:33,108 - toast-orders - INFO - NET SALES: $56351.05
+2025-06-18 15:12:33,109 - toast-orders - INFO - TOTAL DISCOUNTS: $1586.25
+2025-06-18 15:12:33,109 - toast-orders - INFO - TOTAL SERVICE CHARGES: $2955.73
+2025-06-18 15:12:33,109 - toast-orders - INFO - FINAL TOTAL (net - service charges + discounts): $57937.30
+2025-06-18 15:12:33,109 - toast-orders - INFO - ================================================================================
+2025-06-18 15:12:33,109 - toast-orders - INFO - Date Range: 2025-06-01 to 2025-06-02
+2025-06-18 15:12:33,109 - toast-orders - INFO - 
+================================================================================
+2025-06-18 15:12:33,109 - toast-orders - INFO - IMPORTANT NOTES ABOUT DATA
+2025-06-18 15:12:33,109 - toast-orders - INFO - ================================================================================
+2025-06-18 15:12:33,109 - toast-orders - INFO - This output contains raw data with the following processing:
+2025-06-18 15:12:33,109 - toast-orders - INFO - - Excluded 11 voided items
+2025-06-18 15:12:33,109 - toast-orders - INFO - - Discounts have been calculated and shown separately
+2025-06-18 15:12:33,109 - toast-orders - INFO - - No modifiers have been added to prices
+2025-06-18 15:12:33,109 - toast-orders - INFO - - Raw item prices × quantities are used
+2025-06-18 15:12:33,109 - toast-orders - INFO - ================================================================================
+2025-06-18 15:12:33,109 - toast-orders - INFO - COMPREHENSIVE ITEMS LIST: 241 unique items ordered
+2025-06-18 15:12:33,109 - toast-orders - INFO - ----------------------------------------
+2025-06-18 15:12:33,109 - toast-orders - INFO - Sample items:
+2025-06-18 15:12:33,109 - toast-orders - INFO -   Classic Tortilla Soup: 36 units, $514.90 total
+2025-06-18 15:12:33,109 - toast-orders - INFO -   Mission Style Burrito: 42 units, $719.30 total, $60.50 discounts
+2025-06-18 15:12:33,109 - toast-orders - INFO -   Taquitos: 30 units, $524.70 total, $18.00 discounts
+2025-06-18 15:12:33,109 - toast-orders - INFO -   House Made Guacamole: 120 units, $2103.30 total, $72.00 discounts
+2025-06-18 15:12:33,109 - toast-orders - INFO -   Brunch Burrito: 10 units, $159.00 total
+2025-06-18 15:12:33,109 - toast-orders - INFO -   ... and 236 more items
+2025-06-18 15:12:33,109 - toast-orders - INFO - ----------------------------------------
+2025-06-18 15:12:33,109 - toast-orders - INFO - The complete items list will be included in output file and/or webhook data.
+2025-06-18 15:12:33,109 - toast-orders - INFO - ========================================
+2025-06-18 15:12:33,591 - toast-orders - INFO - Raw orders data with basic aggregates saved to elenas-test.json
+2025-06-18 15:12:33,592 - toast-orders - INFO - Operation completed successfully.
+2025-06-18 15:12:33,592 - toast-orders - INFO - ================================================================================
+2025-06-19 12:49:09,621 - toast-orders - INFO - Setting location index to 1
+2025-06-19 12:49:09,622 - toast-orders - INFO - ================================================================================
+2025-06-19 12:49:09,622 - toast-orders - INFO - Toast Orders API Script - Started at 2025-06-19 12:49:09
+2025-06-19 12:49:09,622 - toast-orders - INFO - ================================================================================
+2025-06-19 12:49:09,622 - toast-orders - INFO - Using location index from environment: 1
+2025-06-19 12:49:09,622 - toast-orders - INFO - Explicitly setting TOAST_LOCATION_INDEX to 1 before client initialization
+2025-06-19 12:49:09,622 - toast-orders - INFO - Initializing Toast API client...
+2025-06-19 12:49:09,626 - toast-config - INFO - Config module loaded. Raw TOAST_LOCATION_INDEX from environment: '1'
+2025-06-19 12:49:09,626 - toast-config - INFO - Parsed location_index as integer: 1
+2025-06-19 12:49:09,626 - toast-config - INFO - Using TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1 from LOCATION_GUID_MAP for location index 1
+2025-06-19 12:49:09,626 - toast-config - INFO - Config module initialized successfully with TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:09,626 - toast-client - INFO - Initializing Toast API client with restaurant GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:09,626 - toast-client - INFO - Attempting to fetch new authentication token from Toast API...
+2025-06-19 12:49:09,626 - toast-client - INFO - Using auth URL: https://ws-api.toasttab.com/authentication/v1/authentication/login
+2025-06-19 12:49:09,626 - toast-client - INFO - Authentication attempt 1/6. Payload: {
+  "clientId": "xaxrS3eVpsfmynTJSuTFcdv2VgY8bF06",
+  "clientSecret": "bWSQaHXKqAi8cn5MjsMBxWKdwQj6XyWcKsYJvPchX4dNHCrJyCDkdeS9gzXkzvIJ",
+  "userAccessType": "TOAST_MACHINE_CLIENT"
+}
+2025-06-19 12:49:10,083 - toast-client - INFO - Auth response status: 200
+2025-06-19 12:49:10,085 - toast-client - INFO - Auth token response keys: @class, token, status
+2025-06-19 12:49:10,085 - toast-client - INFO - Successfully retrieved new token, valid until: 2025-06-20 11:37:00
+2025-06-19 12:49:10,088 - toast-orders - INFO - Config module imported, TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:10,089 - toast-orders - INFO - Config module LOCATION_GUID_MAP: {1: '8a3b1856-f4ed-4f13-8f64-6349fbffe1f1', 2: '424bca99-0858-4c55-9fe6-ba3936f2fe1b', 3: '09017aed-dc03-494c-a1b1-cbb0b71a0141', 4: '2058e275-2eff-4cf0-8eeb-12001129d782', 5: '2437b9ff-00d5-4cec-b629-704f72e5f5ae'}
+2025-06-19 12:49:10,089 - toast-orders - INFO - Using restaurant GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1 for location index 1
+2025-06-19 12:49:10,089 - toast-orders - INFO - Confirmed using correct GUID for location 1
+2025-06-19 12:49:10,092 - toast-orders - INFO - Processing orders from 2025-06-13 to 2025-06-15...
+2025-06-19 12:49:10,092 - toast-orders - INFO - Will process 3 days individually...
+2025-06-19 12:49:10,092 - toast-orders - INFO - 
+Processing 2025-06-13...
+2025-06-19 12:49:10,092 - toast-client - INFO - Single day request - Using businessDate: 20250613
+2025-06-19 12:49:10,092 - toast-client - INFO - Starting pagination to fetch all orders...
+2025-06-19 12:49:10,092 - toast-client - INFO - Fetching page 1 with 100 items per page using businessDate parameter...
+2025-06-19 12:49:10,093 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:10,093 - toast-client - INFO - Request method: GET
+2025-06-19 12:49:10,093 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:10,093 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250613",
+  "page": "1",
+  "pageSize": "100"
+}
+2025-06-19 12:49:10,093 - toast-client - INFO - Request data: None
+2025-06-19 12:49:10,093 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:11,101 - toast-client - INFO - Response status: 200
+2025-06-19 12:49:11,120 - toast-client - INFO - Received list with 100 orders for page 1
+2025-06-19 12:49:11,120 - toast-client - INFO - Moving to page 2...
+2025-06-19 12:49:11,626 - toast-client - INFO - Fetching page 2 with 100 items per page using businessDate parameter...
+2025-06-19 12:49:11,626 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:11,626 - toast-client - INFO - Request method: GET
+2025-06-19 12:49:11,626 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:11,626 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250613",
+  "page": "2",
+  "pageSize": "100"
+}
+2025-06-19 12:49:11,626 - toast-client - INFO - Request data: None
+2025-06-19 12:49:11,626 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:12,818 - toast-client - INFO - Response status: 200
+2025-06-19 12:49:12,828 - toast-client - INFO - Received list with 100 orders for page 2
+2025-06-19 12:49:12,828 - toast-client - INFO - Moving to page 3...
+2025-06-19 12:49:13,336 - toast-client - INFO - Fetching page 3 with 100 items per page using businessDate parameter...
+2025-06-19 12:49:13,338 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:13,338 - toast-client - INFO - Request method: GET
+2025-06-19 12:49:13,338 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:13,338 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250613",
+  "page": "3",
+  "pageSize": "100"
+}
+2025-06-19 12:49:13,338 - toast-client - INFO - Request data: None
+2025-06-19 12:49:13,338 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:14,515 - toast-client - INFO - Response status: 200
+2025-06-19 12:49:14,535 - toast-client - INFO - Received list with 100 orders for page 3
+2025-06-19 12:49:14,535 - toast-client - INFO - Moving to page 4...
+2025-06-19 12:49:15,041 - toast-client - INFO - Fetching page 4 with 100 items per page using businessDate parameter...
+2025-06-19 12:49:15,041 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:15,041 - toast-client - INFO - Request method: GET
+2025-06-19 12:49:15,041 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:15,042 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250613",
+  "page": "4",
+  "pageSize": "100"
+}
+2025-06-19 12:49:15,042 - toast-client - INFO - Request data: None
+2025-06-19 12:49:15,042 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:16,053 - toast-client - INFO - Response status: 200
+2025-06-19 12:49:16,065 - toast-client - INFO - Received list with 70 orders for page 4
+2025-06-19 12:49:16,065 - toast-client - INFO - Reached end of data with 70 items on page 4
+2025-06-19 12:49:16,065 - toast-client - INFO - Successfully fetched a total of 370 orders across 4 pages
+2025-06-19 12:49:16,065 - toast-orders - INFO - Retrieved 370 orders for 2025-06-13
+2025-06-19 12:49:16,065 - toast-orders - INFO - 
+Processing 2025-06-14...
+2025-06-19 12:49:16,066 - toast-client - INFO - Single day request - Using businessDate: 20250614
+2025-06-19 12:49:16,066 - toast-client - INFO - Starting pagination to fetch all orders...
+2025-06-19 12:49:16,066 - toast-client - INFO - Fetching page 1 with 100 items per page using businessDate parameter...
+2025-06-19 12:49:16,066 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:16,066 - toast-client - INFO - Request method: GET
+2025-06-19 12:49:16,066 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:16,066 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250614",
+  "page": "1",
+  "pageSize": "100"
+}
+2025-06-19 12:49:16,066 - toast-client - INFO - Request data: None
+2025-06-19 12:49:16,066 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:17,383 - toast-client - INFO - Response status: 200
+2025-06-19 12:49:17,397 - toast-client - INFO - Received list with 100 orders for page 1
+2025-06-19 12:49:17,397 - toast-client - INFO - Moving to page 2...
+2025-06-19 12:49:17,903 - toast-client - INFO - Fetching page 2 with 100 items per page using businessDate parameter...
+2025-06-19 12:49:17,903 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:17,903 - toast-client - INFO - Request method: GET
+2025-06-19 12:49:17,903 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:17,903 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250614",
+  "page": "2",
+  "pageSize": "100"
+}
+2025-06-19 12:49:17,904 - toast-client - INFO - Request data: None
+2025-06-19 12:49:17,904 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:19,010 - toast-client - INFO - Response status: 200
+2025-06-19 12:49:19,021 - toast-client - INFO - Received list with 100 orders for page 2
+2025-06-19 12:49:19,022 - toast-client - INFO - Moving to page 3...
+2025-06-19 12:49:19,524 - toast-client - INFO - Fetching page 3 with 100 items per page using businessDate parameter...
+2025-06-19 12:49:19,524 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:19,524 - toast-client - INFO - Request method: GET
+2025-06-19 12:49:19,524 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:19,524 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250614",
+  "page": "3",
+  "pageSize": "100"
+}
+2025-06-19 12:49:19,524 - toast-client - INFO - Request data: None
+2025-06-19 12:49:19,524 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:20,243 - toast-client - INFO - Response status: 200
+2025-06-19 12:49:20,258 - toast-client - INFO - Received list with 100 orders for page 3
+2025-06-19 12:49:20,258 - toast-client - INFO - Moving to page 4...
+2025-06-19 12:49:20,762 - toast-client - INFO - Fetching page 4 with 100 items per page using businessDate parameter...
+2025-06-19 12:49:20,762 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:20,762 - toast-client - INFO - Request method: GET
+2025-06-19 12:49:20,762 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:20,762 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250614",
+  "page": "4",
+  "pageSize": "100"
+}
+2025-06-19 12:49:20,762 - toast-client - INFO - Request data: None
+2025-06-19 12:49:20,762 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:21,755 - toast-client - INFO - Response status: 200
+2025-06-19 12:49:21,761 - toast-client - INFO - Received list with 46 orders for page 4
+2025-06-19 12:49:21,762 - toast-client - INFO - Reached end of data with 46 items on page 4
+2025-06-19 12:49:21,762 - toast-client - INFO - Successfully fetched a total of 346 orders across 4 pages
+2025-06-19 12:49:21,762 - toast-orders - INFO - Retrieved 346 orders for 2025-06-14
+2025-06-19 12:49:21,762 - toast-orders - INFO - 
+Processing 2025-06-15...
+2025-06-19 12:49:21,762 - toast-client - INFO - Single day request - Using businessDate: 20250615
+2025-06-19 12:49:21,762 - toast-client - INFO - Starting pagination to fetch all orders...
+2025-06-19 12:49:21,762 - toast-client - INFO - Fetching page 1 with 100 items per page using businessDate parameter...
+2025-06-19 12:49:21,762 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:21,762 - toast-client - INFO - Request method: GET
+2025-06-19 12:49:21,762 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:21,762 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250615",
+  "page": "1",
+  "pageSize": "100"
+}
+2025-06-19 12:49:21,762 - toast-client - INFO - Request data: None
+2025-06-19 12:49:21,762 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:22,792 - toast-client - INFO - Response status: 200
+2025-06-19 12:49:22,820 - toast-client - INFO - Received list with 100 orders for page 1
+2025-06-19 12:49:22,821 - toast-client - INFO - Moving to page 2...
+2025-06-19 12:49:23,327 - toast-client - INFO - Fetching page 2 with 100 items per page using businessDate parameter...
+2025-06-19 12:49:23,327 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:23,327 - toast-client - INFO - Request method: GET
+2025-06-19 12:49:23,327 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:23,328 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250615",
+  "page": "2",
+  "pageSize": "100"
+}
+2025-06-19 12:49:23,329 - toast-client - INFO - Request data: None
+2025-06-19 12:49:23,329 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:24,517 - toast-client - INFO - Response status: 200
+2025-06-19 12:49:24,548 - toast-client - INFO - Received list with 100 orders for page 2
+2025-06-19 12:49:24,548 - toast-client - INFO - Moving to page 3...
+2025-06-19 12:49:25,054 - toast-client - INFO - Fetching page 3 with 100 items per page using businessDate parameter...
+2025-06-19 12:49:25,054 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:25,055 - toast-client - INFO - Request method: GET
+2025-06-19 12:49:25,055 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:25,055 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250615",
+  "page": "3",
+  "pageSize": "100"
+}
+2025-06-19 12:49:25,055 - toast-client - INFO - Request data: None
+2025-06-19 12:49:25,055 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:26,400 - toast-client - INFO - Response status: 200
+2025-06-19 12:49:26,441 - toast-client - INFO - Received list with 100 orders for page 3
+2025-06-19 12:49:26,441 - toast-client - INFO - Moving to page 4...
+2025-06-19 12:49:26,947 - toast-client - INFO - Fetching page 4 with 100 items per page using businessDate parameter...
+2025-06-19 12:49:26,947 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:26,947 - toast-client - INFO - Request method: GET
+2025-06-19 12:49:26,947 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 12:49:26,947 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250615",
+  "page": "4",
+  "pageSize": "100"
+}
+2025-06-19 12:49:26,947 - toast-client - INFO - Request data: None
+2025-06-19 12:49:26,947 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 12:49:27,457 - toast-client - INFO - Response status: 200
+2025-06-19 12:49:27,467 - toast-client - INFO - Received list with 36 orders for page 4
+2025-06-19 12:49:27,467 - toast-client - INFO - Reached end of data with 36 items on page 4
+2025-06-19 12:49:27,467 - toast-client - INFO - Successfully fetched a total of 336 orders across 4 pages
+2025-06-19 12:49:27,467 - toast-orders - INFO - Retrieved 336 orders for 2025-06-15
+2025-06-19 12:49:27,467 - toast-orders - INFO - Using provided location index: 1
+2025-06-19 12:49:27,483 - toast-orders - INFO - Processed data into 296 unique menu items across 8 categories
+2025-06-19 12:49:27,483 - toast-orders - INFO - Excluded 31 voided items from totals
+2025-06-19 12:49:27,483 - toast-orders - INFO - Excluded 7 gift card items from totals
+2025-06-19 12:49:27,483 - toast-orders - INFO - Total discounts applied: $2561.83
+2025-06-19 12:49:27,483 - toast-orders - INFO - Total sales after discounts (Net Sales): $109468.82
+2025-06-19 12:49:27,483 - toast-orders - INFO - Total non-gratuity service charges: $5648.53
+2025-06-19 12:49:27,483 - toast-orders - INFO - Total sales (net sales + discounts): $112030.65
+2025-06-19 12:49:27,483 - toast-orders - INFO - Location index: 1
+2025-06-19 12:49:27,484 - toast-orders - INFO - 
+================================================================================
+2025-06-19 12:49:27,484 - toast-orders - INFO - SALES AGGREGATES BY CATEGORY (Excluding Voided Items)
+2025-06-19 12:49:27,484 - toast-orders - INFO - ================================================================================
+2025-06-19 12:49:27,484 - toast-orders - INFO - Food: $79774.75 (3939.0 items) - Discounts: $1558.95 - Service Charges: $3906.71 - Total: $81333.70
+2025-06-19 12:49:27,484 - toast-orders - INFO - Draft Beer: $742.00 (87.0 items) - Discounts: $20.00 - Service Charges: $44.24 - Total: $762.00
+2025-06-19 12:49:27,484 - toast-orders - INFO - Bottled Beer: $198.00 (33.0 items) - Service Charges: $11.88 - Total: $198.00
+2025-06-19 12:49:27,484 - toast-orders - INFO - Wine: $1241.00 (73.0 items) - Service Charges: $74.46 - Total: $1241.00
+2025-06-19 12:49:27,484 - toast-orders - INFO - Liquor: $24094.75 (1473.0 items) - Discounts: $849.50 - Service Charges: $1415.48 - Total: $24944.25
+2025-06-19 12:49:27,484 - toast-orders - INFO - NA Beverage: $3318.32 (582.0 items) - Discounts: $133.38 - Service Charges: $187.51 - Total: $3451.70
+2025-06-19 12:49:27,484 - toast-orders - INFO - Corkage Fee: $50.00 (2.0 items) - Service Charges: $3.00 - Total: $50.00
+2025-06-19 12:49:27,484 - toast-orders - INFO - Other: $50.00 (10.0 items) - Service Charges: $5.25 - Total: $50.00
+2025-06-19 12:49:27,484 - toast-orders - INFO - --------------------------------------------------------------------------------
+2025-06-19 12:49:27,484 - toast-orders - INFO - TOTAL SALES: $112030.65 (TOTAL ITEMS: 6199.0)
+2025-06-19 12:49:27,484 - toast-orders - INFO - NET SALES: $109468.82
+2025-06-19 12:49:27,484 - toast-orders - INFO - TOTAL DISCOUNTS: $2561.83
+2025-06-19 12:49:27,484 - toast-orders - INFO - TOTAL SERVICE CHARGES: $5648.53
+2025-06-19 12:49:27,484 - toast-orders - INFO - FINAL TOTAL (net - service charges + discounts): $112030.65
+2025-06-19 12:49:27,484 - toast-orders - INFO - ================================================================================
+2025-06-19 12:49:27,484 - toast-orders - INFO - Date Range: 2025-06-13 to 2025-06-15
+2025-06-19 12:49:27,484 - toast-orders - INFO - 
+================================================================================
+2025-06-19 12:49:27,484 - toast-orders - INFO - IMPORTANT NOTES ABOUT DATA
+2025-06-19 12:49:27,484 - toast-orders - INFO - ================================================================================
+2025-06-19 12:49:27,484 - toast-orders - INFO - This output contains raw data with the following processing:
+2025-06-19 12:49:27,484 - toast-orders - INFO - - Excluded 31 voided items
+2025-06-19 12:49:27,484 - toast-orders - INFO - - Discounts have been calculated and shown separately
+2025-06-19 12:49:27,484 - toast-orders - INFO - - No modifiers have been added to prices
+2025-06-19 12:49:27,484 - toast-orders - INFO - - Raw item prices × quantities are used
+2025-06-19 12:49:27,484 - toast-orders - INFO - ================================================================================
+2025-06-19 12:49:27,484 - toast-orders - INFO - COMPREHENSIVE ITEMS LIST: 296 unique items ordered
+2025-06-19 12:49:27,484 - toast-orders - INFO - ----------------------------------------
+2025-06-19 12:49:27,484 - toast-orders - INFO - Sample items:
+2025-06-19 12:49:27,484 - toast-orders - INFO -   Elena's Chopped Salad: 25 units, $563.70 total
+2025-06-19 12:49:27,485 - toast-orders - INFO -   Fish Tacos: 114 units, $2215.00 total, $80.00 discounts
+2025-06-19 12:49:27,485 - toast-orders - INFO -   Decaf Coffee: 5 units, $17.50 total
+2025-06-19 12:49:27,485 - toast-orders - INFO -   Side Rice & Beans: 52 units, $527.50 total
+2025-06-19 12:49:27,485 - toast-orders - INFO -   Additional Chips and Salsa: 68 units, $423.90 total
+2025-06-19 12:49:27,485 - toast-orders - INFO -   ... and 291 more items
+2025-06-19 12:49:27,485 - toast-orders - INFO - ----------------------------------------
+2025-06-19 12:49:27,485 - toast-orders - INFO - The complete items list will be included in output file and/or webhook data.
+2025-06-19 12:49:27,485 - toast-orders - INFO - ========================================
+2025-06-19 12:49:28,315 - toast-orders - INFO - Raw orders data with basic aggregates saved to elenas-june-13-15.json
+2025-06-19 12:49:28,315 - toast-orders - INFO - Operation completed successfully.
+2025-06-19 12:49:28,315 - toast-orders - INFO - ================================================================================

@@ -437,3 +437,22 @@ class ToastAPIClient:
         """
         endpoint = "/menus/v2/menus"
         return self._make_request(endpoint)
+    
+    def get_employee(self, employee_guid: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Fetch employee information from the Toast API.
+        
+        Args:
+            employee_guid: Optional GUID of the employee to retrieve. If None, fetches all employees.
+            
+        Returns:
+            Dict containing employee data
+            
+        Raises:
+            requests.exceptions.RequestException: If the API request fails
+        """
+        endpoint = "/labor/v1/employees"
+        params = {}
+        if employee_guid:
+            params["employeeIds"] = employee_guid
+        return self._make_request(endpoint, params=params if params else None)

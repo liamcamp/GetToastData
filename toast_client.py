@@ -456,3 +456,41 @@ class ToastAPIClient:
         if employee_guid:
             params["employeeIds"] = employee_guid
         return self._make_request(endpoint, params=params if params else None)
+    
+    def get_time_entries(self, business_date: Optional[str] = None, start_date: Optional[str] = None, 
+                        end_date: Optional[str] = None, include_archived: bool = True, 
+                        include_missed_breaks: bool = True, time_entry_ids: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Fetch time entries from the Toast API.
+        
+        Args:
+            business_date: Business date in string format (YYYY-MM-DD)
+            start_date: Start date in ISO format (e.g. "2025-01-01T00:00:00.000Z")
+            end_date: End date in ISO format (e.g. "2025-01-31T23:59:59.999Z")
+            include_archived: Whether to include archived time entries (default: True)
+            include_missed_breaks: Whether to include missed breaks (default: True)
+            time_entry_ids: Comma-separated list of time entry IDs to filter
+            
+        Returns:
+            Dict containing time entries data
+            
+        Raises:
+            requests.exceptions.RequestException: If the API request fails
+        """
+        endpoint = "/labor/v1/timeEntries"
+        params = {}
+        
+        if business_date:
+            params["businessDate"] = business_date
+        if start_date:
+            params["startDate"] = start_date
+        if end_date:
+            params["endDate"] = end_date
+        if include_archived:
+            params["includeArchived"] = str(include_archived).lower()
+        if include_missed_breaks:
+            params["includeMissedBreaks"] = str(include_missed_breaks).lower()
+        if time_entry_ids:
+            params["timeEntryIds"] = time_entry_ids
+            
+        return self._make_request(endpoint, params=params if params else None)

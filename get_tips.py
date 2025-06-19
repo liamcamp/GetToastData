@@ -214,9 +214,135 @@ def get_employee_mapping():
         logger.warning("Falling back to server_map.json if available")
         return {}
 
+def fetch_and_process_time_entries(client, date_range, employee_mapping):
+    """
+    Fetch time entries data from Toast API and process it with employee information.
+    
+    Args:
+        client: ToastAPIClient instance
+        date_range: Dict with 'start_date' and 'end_date' strings in YYYY-MM-DD format
+        employee_mapping: Dictionary mapping employee GUIDs to names
+        
+    Returns:
+        Dictionary with time entries data organized by day and employee
+    """
+    try:
+        logger.info(f"Fetching time entries for date range: {date_range['start_date']} to {date_range['end_date']}")
+        
+        # Fetch time entries for the date range
+        if date_range['start_date'] == date_range['end_date']:
+            # Single day - use businessDate parameter
+            time_entries_response = client.get_time_entries(
+                business_date=date_range['start_date'],
+                include_archived=True,
+                include_missed_breaks=True
+            )
+        else:
+            # Date range - use start/end dates
+            start_date = f"{date_range['start_date']}T00:00:00.000Z"
+            end_date = f"{date_range['end_date']}T23:59:59.999Z"
+            time_entries_response = client.get_time_entries(
+                start_date=start_date,
+                end_date=end_date,
+                include_archived=True,
+                include_missed_breaks=True
+            )
+        
+        # Extract time entries from response
+        if isinstance(time_entries_response, dict):
+            time_entries_data = time_entries_response.get('timeEntries', time_entries_response.get('data', []))
+        elif isinstance(time_entries_response, list):
+            time_entries_data = time_entries_response
+        else:
+            logger.warning("Unexpected time entries response structure")
+            time_entries_data = []
+        
+        logger.info(f"Retrieved {len(time_entries_data)} time entries from Toast API")
+        
+        # Process time entries by day
+        time_entries_by_day = defaultdict(list)
+        
+        for entry in time_entries_data:
+            # Get business date (in YYYYMMDD format)
+            business_date = entry.get('businessDate')
+            if not business_date:
+                continue
+                
+            # Convert business date to YYYY-MM-DD format
+            business_date_str = str(business_date)
+            if len(business_date_str) == 8:
+                formatted_date = f"{business_date_str[:4]}-{business_date_str[4:6]}-{business_date_str[6:8]}"
+            else:
+                logger.warning(f"Invalid business date format: {business_date}")
+                continue
+            
+            # Extract employee information
+            employee_ref = entry.get('employeeReference', {})
+            employee_guid = employee_ref.get('guid')
+            
+            if not employee_guid:
+                logger.warning(f"No employee GUID found for time entry {entry.get('guid')}")
+                continue
+            
+            # Get employee name from mapping
+            employee_info = employee_mapping.get(employee_guid, {})
+            if isinstance(employee_info, dict):
+                employee_name = employee_info.get('name', f"Unknown Employee ({employee_guid[-8:]})")
+            else:
+                # Fallback for old format
+                employee_name = employee_info if employee_info else f"Unknown Employee ({employee_guid[-8:]})"
+            
+            # Create time entry record
+            time_entry_record = {
+                'employeeGuid': employee_guid,
+                'employeeName': employee_name,
+                'inDate': entry.get('inDate'),
+                'outDate': entry.get('outDate'),
+                'regularHours': entry.get('regularHours', 0.0),
+                'overtimeHours': entry.get('overtimeHours', 0.0),
+                'businessDate': formatted_date,
+                'timeEntryGuid': entry.get('guid')
+            }
+            
+            time_entries_by_day[formatted_date].append(time_entry_record)
+        
+        # Sort entries within each day by employee name
+        for date in time_entries_by_day:
+            time_entries_by_day[date].sort(key=lambda x: x['employeeName'])
+        
+        # Convert to regular dict and sort by date
+        time_entries_by_day_sorted = dict(sorted(time_entries_by_day.items()))
+        
+        logger.info(f"Processed time entries for {len(time_entries_by_day_sorted)} days")
+        
+        return {
+            'timeEntriesByDay': time_entries_by_day_sorted,
+            'summary': {
+                'totalTimeEntries': len(time_entries_data),
+                'daysWithTimeEntries': len(time_entries_by_day_sorted),
+                'totalRegularHours': sum(entry.get('regularHours', 0.0) for entry in time_entries_data),
+                'totalOvertimeHours': sum(entry.get('overtimeHours', 0.0) for entry in time_entries_data)
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Error fetching time entries: {e}")
+        logger.error(f"Traceback: {traceback.format_exc()}")
+        return {
+            'timeEntriesByDay': {},
+            'summary': {
+                'totalTimeEntries': 0,
+                'daysWithTimeEntries': 0,
+                'totalRegularHours': 0.0,
+                'totalOvertimeHours': 0.0
+            },
+            'error': str(e)
+        }
+
 def process_tips_data(orders_data, location_index=None, date_range=None):
     """
     Process orders data to extract tips per day and sales per server.
+    Also fetch and process time entries data for the same date range.
     
     Args:
         orders_data: Raw orders data from Toast API
@@ -224,7 +350,7 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
         date_range: Dict with 'start_date' and 'end_date' strings in YYYY-MM-DD format
         
     Returns:
-        Dictionary with tips per day and sales per server
+        Dictionary with tips per day, sales per server, and time entries data
     """
     # Get location index from environment if not provided
     if location_index is None:
@@ -383,6 +509,34 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
         },
         'location_index': location_index
     }
+    
+    # Fetch and process time entries data if date_range is provided
+    time_entries_data = {}
+    if date_range:
+        try:
+            # Initialize client for time entries
+            client = ToastAPIClient()
+            time_entries_data = fetch_and_process_time_entries(client, date_range, server_guid_to_name)
+            
+            # Add time entries data to result
+            result['timeEntries'] = time_entries_data
+            
+            logger.info(f"Fetched {time_entries_data['summary']['totalTimeEntries']} time entries for {time_entries_data['summary']['daysWithTimeEntries']} days")
+            logger.info(f"Total regular hours: {time_entries_data['summary']['totalRegularHours']:.2f}")
+            logger.info(f"Total overtime hours: {time_entries_data['summary']['totalOvertimeHours']:.2f}")
+            
+        except Exception as e:
+            logger.error(f"Error processing time entries: {e}")
+            result['timeEntries'] = {
+                'timeEntriesByDay': {},
+                'summary': {
+                    'totalTimeEntries': 0,
+                    'daysWithTimeEntries': 0,
+                    'totalRegularHours': 0.0,
+                    'totalOvertimeHours': 0.0
+                },
+                'error': str(e)
+            }
     
     # Log processing results
     logger.info(f"Processed {total_orders_processed} orders and {total_payments_processed} payments")
@@ -572,12 +726,38 @@ def main():
         
         logger.info(f"\nTotal Server Sales: ${processed_data['summary']['total_server_sales']:.2f}")
         
+        # Display time entries information if available
+        if 'timeEntries' in processed_data and processed_data['timeEntries']['summary']['totalTimeEntries'] > 0:
+            logger.info("\n" + "=" * 80)
+            logger.info("TIME ENTRIES BY DATE")
+            logger.info("=" * 80)
+            
+            time_entries_summary = processed_data['timeEntries']['summary']
+            logger.info(f"Total Time Entries: {time_entries_summary['totalTimeEntries']}")
+            logger.info(f"Total Regular Hours: {time_entries_summary['totalRegularHours']:.2f}")
+            logger.info(f"Total Overtime Hours: {time_entries_summary['totalOvertimeHours']:.2f}")
+            logger.info(f"Days with Time Entries: {time_entries_summary['daysWithTimeEntries']}")
+            
+            # Display time entries by day
+            for date, entries in processed_data['timeEntries']['timeEntriesByDay'].items():
+                logger.info(f"\n{date}:")
+                day_total_hours = 0.0
+                for entry in entries:
+                    in_time = entry['inDate'].split('T')[1][:5] if entry['inDate'] else "N/A"
+                    out_time = entry['outDate'].split('T')[1][:5] if entry['outDate'] else "N/A"
+                    regular_hours = entry['regularHours']
+                    day_total_hours += regular_hours
+                    logger.info(f"  {entry['employeeName']}: {in_time}-{out_time} ({regular_hours:.2f}h)")
+                logger.info(f"  Day Total: {day_total_hours:.2f} hours")
+        elif 'timeEntries' in processed_data and 'error' in processed_data['timeEntries']:
+            logger.warning(f"\nTime entries could not be fetched: {processed_data['timeEntries']['error']}")
+        
         # Save to output file if specified
         if args.output:
             try:
                 with open(args.output, 'w') as f:
                     json.dump(processed_data, f, indent=2)
-                logger.info(f"\nTips and server sales data saved to {args.output}")
+                logger.info(f"\nTips, server sales, and time entries data saved to {args.output}")
             except Exception as e:
                 error_msg = str(e)
                 error_traceback = traceback.format_exc()

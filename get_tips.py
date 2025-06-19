@@ -71,15 +71,17 @@ def send_error_to_webhook(error_msg: str, error_traceback: str, context: str = "
         logger.error(f"Failed to send error to webhook: {str(e)}")
         return False
 
-def send_data_to_webhook(processed_data):
+def send_data_to_webhook(processed_data, webhook_url=None):
     """
     Send processed tips and server data to webhook.
     
     Args:
         processed_data: Processed tips and server data
+        webhook_url: Optional webhook URL to override default
     """
-    # Webhook URL for tips data
-    webhook_url = "https://originaljoes.app.n8n.cloud/webhook/57938ed1-012b-47f7-8adf-3614117ae333"
+    # Default webhook URL if none provided
+    if webhook_url is None:
+        webhook_url = "https://originaljoes.app.n8n.cloud/webhook/57938ed1-012b-47f7-8adf-3614117ae333"
     
     logger.info(f"Sending tips data to webhook: {webhook_url}")
     
@@ -125,13 +127,14 @@ def parse_args():
                        help='Location index (1-5) to determine which restaurant GUID to use')
     parser.add_argument('--output-file', dest='output', help='File to save tips and server data')
     parser.add_argument('--webhook', action='store_true', help='Send processed data to webhook')
+    parser.add_argument('--response-webhook-url', dest='response_webhook_url', help='Webhook URL to send the response data to')
     parser.add_argument('--debug', action='store_true', help='Enable detailed debugging output')
     
     args = parser.parse_args()
     
     # Validate that at least one output method is specified
-    if not args.output and not args.webhook:
-        parser.error("Must specify either --output-file or --webhook (or both)")
+    if not args.output and not args.webhook and not args.response_webhook_url:
+        parser.error("Must specify either --output-file, --webhook, or --response-webhook-url (or multiple)")
     
     # Set location index in environment if provided and not already set
     if args.location_index and not os.getenv('TOAST_LOCATION_INDEX'):
@@ -388,6 +391,7 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
     # Initialize data structures
     tips_by_date = defaultdict(float)
     sales_by_server = defaultdict(float)
+    tips_by_server = defaultdict(float)
     
     # Track processing statistics
     total_orders_processed = 0
@@ -442,20 +446,24 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
                 if payment.get('voidInfo') is not None:
                     continue
                 
-                # Extract tip amount
+                # Extract tip amount and server info
                 tip_amount = float(payment.get('tipAmount', 0))
+                server_info = payment.get('server')
+                server_guid = server_info.get('guid') if server_info else None
+                
                 if tip_amount > 0:
                     tips_by_date[order_date] += tip_amount
                     order_has_tips = True
-                
-                # Extract sales amount and server info
-                payment_amount = float(payment.get('amount', 0))
-                server_info = payment.get('server')
-                
-                if server_info and payment_amount > 0:
-                    server_guid = server_info.get('guid')
+                    
+                    # Track tips by server if server info is available
                     if server_guid:
-                        sales_by_server[server_guid] += payment_amount
+                        tips_by_server[server_guid] += tip_amount
+                
+                # Extract sales amount and track by server
+                payment_amount = float(payment.get('amount', 0))
+                
+                if server_info and payment_amount > 0 and server_guid:
+                    sales_by_server[server_guid] += payment_amount
         
         if order_has_tips:
             orders_with_tips += 1
@@ -463,10 +471,17 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
     # Convert defaultdicts to regular dicts and sort
     tips_by_date_sorted = dict(sorted(tips_by_date.items()))
     sales_by_server_sorted = dict(sorted(sales_by_server.items()))
+    tips_by_server_sorted = dict(sorted(tips_by_server.items()))
     
-    # Create server summary with names and external employee IDs
+    # Create server summary with names, external employee IDs, sales, and tips
     server_summary = []
-    for server_guid, total_sales in sales_by_server_sorted.items():
+    # Get all server GUIDs from both sales and tips data
+    all_server_guids = set(sales_by_server_sorted.keys()) | set(tips_by_server_sorted.keys())
+    
+    for server_guid in sorted(all_server_guids):
+        total_sales = sales_by_server_sorted.get(server_guid, 0.0)
+        total_tips = tips_by_server_sorted.get(server_guid, 0.0)
+        
         # Handle both old string format and new dict format for backward compatibility
         if isinstance(server_guid_to_name.get(server_guid), dict):
             server_info = server_guid_to_name[server_guid]
@@ -481,7 +496,8 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
             'server_guid': server_guid,
             'server_name': server_name,
             'external_employee_id': external_employee_id,
-            'total_sales': round(total_sales, 2)
+            'total_sales': round(total_sales, 2),
+            'total_tips': round(total_tips, 2)
         })
     
     # Calculate summary statistics
@@ -722,7 +738,7 @@ def main():
         
         for server in processed_data['sales_by_server']:
             external_id_info = f" [ID: {server['external_employee_id']}]" if server['external_employee_id'] else ""
-            logger.info(f"{server['server_name']} ({server['server_guid']}){external_id_info}: ${server['total_sales']:.2f}")
+            logger.info(f"{server['server_name']} ({server['server_guid']}){external_id_info}: Sales: ${server['total_sales']:.2f}, Tips: ${server['total_tips']:.2f}")
         
         logger.info(f"\nTotal Server Sales: ${processed_data['summary']['total_server_sales']:.2f}")
         
@@ -773,6 +789,10 @@ def main():
         # Send to webhook if requested
         if args.webhook:
             send_data_to_webhook(processed_data)
+        
+        # Send to response webhook if URL provided
+        if args.response_webhook_url:
+            send_data_to_webhook(processed_data, args.response_webhook_url)
         
         logger.info("Operation completed successfully.")
         logger.info("=" * 80)

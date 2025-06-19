@@ -4332,3 +4332,401 @@ Total Server Sales: $106912.95
 Tips, server sales, and time entries data saved to elenas-tips-6-13-15-2.json
 2025-06-19 13:42:41,544 - toast-tips - INFO - Operation completed successfully.
 2025-06-19 13:42:41,544 - toast-tips - INFO - ================================================================================
+2025-06-19 16:32:23,132 - toast-tips - INFO - Setting location index to 1
+2025-06-19 16:32:23,133 - toast-tips - INFO - ================================================================================
+2025-06-19 16:32:23,133 - toast-tips - INFO - Toast Tips API Script - Started at 2025-06-19 16:32:23
+2025-06-19 16:32:23,133 - toast-tips - INFO - ================================================================================
+2025-06-19 16:32:23,133 - toast-tips - INFO - Using location index from environment: 1
+2025-06-19 16:32:23,133 - toast-tips - INFO - Explicitly setting TOAST_LOCATION_INDEX to 1 before client initialization
+2025-06-19 16:32:23,133 - toast-tips - INFO - Initializing Toast API client...
+2025-06-19 16:32:23,136 - toast-config - INFO - Config module loaded. Raw TOAST_LOCATION_INDEX from environment: '1'
+2025-06-19 16:32:23,136 - toast-config - INFO - Parsed location_index as integer: 1
+2025-06-19 16:32:23,136 - toast-config - INFO - Using TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1 from LOCATION_GUID_MAP for location index 1
+2025-06-19 16:32:23,136 - toast-config - INFO - Config module initialized successfully with TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:23,136 - toast-client - INFO - Initializing Toast API client with restaurant GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:23,136 - toast-client - INFO - Attempting to fetch new authentication token from Toast API...
+2025-06-19 16:32:23,136 - toast-client - INFO - Using auth URL: https://ws-api.toasttab.com/authentication/v1/authentication/login
+2025-06-19 16:32:23,136 - toast-client - INFO - Authentication attempt 1/6. Payload: {
+  "clientId": "xaxrS3eVpsfmynTJSuTFcdv2VgY8bF06",
+  "clientSecret": "bWSQaHXKqAi8cn5MjsMBxWKdwQj6XyWcKsYJvPchX4dNHCrJyCDkdeS9gzXkzvIJ",
+  "userAccessType": "TOAST_MACHINE_CLIENT"
+}
+2025-06-19 16:32:23,608 - toast-client - INFO - Auth response status: 200
+2025-06-19 16:32:23,608 - toast-client - INFO - Auth token response keys: @class, token, status
+2025-06-19 16:32:23,608 - toast-client - INFO - Successfully retrieved new token, valid until: 2025-06-20 11:37:00
+2025-06-19 16:32:23,610 - toast-tips - INFO - Config module imported, TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:23,610 - toast-tips - INFO - Config module LOCATION_GUID_MAP: {1: '8a3b1856-f4ed-4f13-8f64-6349fbffe1f1', 2: '424bca99-0858-4c55-9fe6-ba3936f2fe1b', 3: '09017aed-dc03-494c-a1b1-cbb0b71a0141', 4: '2058e275-2eff-4cf0-8eeb-12001129d782', 5: '2437b9ff-00d5-4cec-b629-704f72e5f5ae'}
+2025-06-19 16:32:23,611 - toast-tips - INFO - Using restaurant GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1 for location index 1
+2025-06-19 16:32:23,611 - toast-tips - INFO - Confirmed using correct GUID for location 1
+2025-06-19 16:32:23,614 - toast-tips - INFO - Processing orders from 2025-06-14 to 2025-06-15...
+2025-06-19 16:32:23,614 - toast-tips - INFO - Will process 2 days individually...
+2025-06-19 16:32:23,614 - toast-tips - INFO - 
+Processing 2025-06-14...
+2025-06-19 16:32:23,614 - toast-client - INFO - Single day request - Using businessDate: 20250614
+2025-06-19 16:32:23,614 - toast-client - INFO - Starting pagination to fetch all orders...
+2025-06-19 16:32:23,614 - toast-client - INFO - Fetching page 1 with 100 items per page using businessDate parameter...
+2025-06-19 16:32:23,614 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:23,614 - toast-client - INFO - Request method: GET
+2025-06-19 16:32:23,614 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:23,614 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250614",
+  "page": "1",
+  "pageSize": "100"
+}
+2025-06-19 16:32:23,614 - toast-client - INFO - Request data: None
+2025-06-19 16:32:23,614 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:24,890 - toast-client - INFO - Response status: 200
+2025-06-19 16:32:24,911 - toast-client - INFO - Received list with 100 orders for page 1
+2025-06-19 16:32:24,911 - toast-client - INFO - Moving to page 2...
+2025-06-19 16:32:25,417 - toast-client - INFO - Fetching page 2 with 100 items per page using businessDate parameter...
+2025-06-19 16:32:25,417 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:25,418 - toast-client - INFO - Request method: GET
+2025-06-19 16:32:25,418 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:25,418 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250614",
+  "page": "2",
+  "pageSize": "100"
+}
+2025-06-19 16:32:25,418 - toast-client - INFO - Request data: None
+2025-06-19 16:32:25,418 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:26,862 - toast-client - INFO - Response status: 200
+2025-06-19 16:32:26,888 - toast-client - INFO - Received list with 100 orders for page 2
+2025-06-19 16:32:26,889 - toast-client - INFO - Moving to page 3...
+2025-06-19 16:32:27,396 - toast-client - INFO - Fetching page 3 with 100 items per page using businessDate parameter...
+2025-06-19 16:32:27,396 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:27,396 - toast-client - INFO - Request method: GET
+2025-06-19 16:32:27,396 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:27,396 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250614",
+  "page": "3",
+  "pageSize": "100"
+}
+2025-06-19 16:32:27,397 - toast-client - INFO - Request data: None
+2025-06-19 16:32:27,397 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:28,704 - toast-client - INFO - Response status: 200
+2025-06-19 16:32:28,731 - toast-client - INFO - Received list with 100 orders for page 3
+2025-06-19 16:32:28,732 - toast-client - INFO - Moving to page 4...
+2025-06-19 16:32:29,237 - toast-client - INFO - Fetching page 4 with 100 items per page using businessDate parameter...
+2025-06-19 16:32:29,238 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:29,238 - toast-client - INFO - Request method: GET
+2025-06-19 16:32:29,238 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:29,238 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250614",
+  "page": "4",
+  "pageSize": "100"
+}
+2025-06-19 16:32:29,238 - toast-client - INFO - Request data: None
+2025-06-19 16:32:29,238 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:30,285 - toast-client - INFO - Response status: 200
+2025-06-19 16:32:30,294 - toast-client - INFO - Received list with 46 orders for page 4
+2025-06-19 16:32:30,294 - toast-client - INFO - Reached end of data with 46 items on page 4
+2025-06-19 16:32:30,294 - toast-client - INFO - Successfully fetched a total of 346 orders across 4 pages
+2025-06-19 16:32:30,294 - toast-tips - INFO - Retrieved 346 orders for 2025-06-14
+2025-06-19 16:32:30,294 - toast-tips - INFO - 
+Processing 2025-06-15...
+2025-06-19 16:32:30,294 - toast-client - INFO - Single day request - Using businessDate: 20250615
+2025-06-19 16:32:30,294 - toast-client - INFO - Starting pagination to fetch all orders...
+2025-06-19 16:32:30,294 - toast-client - INFO - Fetching page 1 with 100 items per page using businessDate parameter...
+2025-06-19 16:32:30,294 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:30,294 - toast-client - INFO - Request method: GET
+2025-06-19 16:32:30,294 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:30,294 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250615",
+  "page": "1",
+  "pageSize": "100"
+}
+2025-06-19 16:32:30,294 - toast-client - INFO - Request data: None
+2025-06-19 16:32:30,294 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:31,611 - toast-client - INFO - Response status: 200
+2025-06-19 16:32:31,641 - toast-client - INFO - Received list with 100 orders for page 1
+2025-06-19 16:32:31,641 - toast-client - INFO - Moving to page 2...
+2025-06-19 16:32:32,150 - toast-client - INFO - Fetching page 2 with 100 items per page using businessDate parameter...
+2025-06-19 16:32:32,152 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:32,152 - toast-client - INFO - Request method: GET
+2025-06-19 16:32:32,152 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:32,152 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250615",
+  "page": "2",
+  "pageSize": "100"
+}
+2025-06-19 16:32:32,152 - toast-client - INFO - Request data: None
+2025-06-19 16:32:32,152 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:32,917 - toast-client - INFO - Response status: 200
+2025-06-19 16:32:32,942 - toast-client - INFO - Received list with 100 orders for page 2
+2025-06-19 16:32:32,942 - toast-client - INFO - Moving to page 3...
+2025-06-19 16:32:33,449 - toast-client - INFO - Fetching page 3 with 100 items per page using businessDate parameter...
+2025-06-19 16:32:33,450 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:33,450 - toast-client - INFO - Request method: GET
+2025-06-19 16:32:33,450 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:33,450 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250615",
+  "page": "3",
+  "pageSize": "100"
+}
+2025-06-19 16:32:33,450 - toast-client - INFO - Request data: None
+2025-06-19 16:32:33,451 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:34,688 - toast-client - INFO - Response status: 200
+2025-06-19 16:32:34,716 - toast-client - INFO - Received list with 100 orders for page 3
+2025-06-19 16:32:34,716 - toast-client - INFO - Moving to page 4...
+2025-06-19 16:32:35,222 - toast-client - INFO - Fetching page 4 with 100 items per page using businessDate parameter...
+2025-06-19 16:32:35,222 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:35,222 - toast-client - INFO - Request method: GET
+2025-06-19 16:32:35,222 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:35,223 - toast-client - INFO - Request parameters: {
+  "businessDate": "20250615",
+  "page": "4",
+  "pageSize": "100"
+}
+2025-06-19 16:32:35,223 - toast-client - INFO - Request data: None
+2025-06-19 16:32:35,224 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/orders/v2/ordersBulk
+2025-06-19 16:32:36,081 - toast-client - INFO - Response status: 200
+2025-06-19 16:32:36,087 - toast-client - INFO - Received list with 36 orders for page 4
+2025-06-19 16:32:36,087 - toast-client - INFO - Reached end of data with 36 items on page 4
+2025-06-19 16:32:36,087 - toast-client - INFO - Successfully fetched a total of 336 orders across 4 pages
+2025-06-19 16:32:36,087 - toast-tips - INFO - Retrieved 336 orders for 2025-06-15
+2025-06-19 16:32:36,087 - toast-tips - INFO - Using provided location index: 1
+2025-06-19 16:32:36,087 - toast-client - INFO - Reloading config module to get latest configuration
+2025-06-19 16:32:36,088 - toast-config - INFO - Config module loaded. Raw TOAST_LOCATION_INDEX from environment: '1'
+2025-06-19 16:32:36,088 - toast-config - INFO - Parsed location_index as integer: 1
+2025-06-19 16:32:36,088 - toast-config - INFO - Using TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1 from LOCATION_GUID_MAP for location index 1
+2025-06-19 16:32:36,088 - toast-config - INFO - Config module initialized successfully with TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:36,088 - toast-client - INFO - Initializing Toast API client with restaurant GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:36,088 - toast-client - INFO - Attempting to fetch new authentication token from Toast API...
+2025-06-19 16:32:36,088 - toast-client - INFO - Using auth URL: https://ws-api.toasttab.com/authentication/v1/authentication/login
+2025-06-19 16:32:36,088 - toast-client - INFO - Authentication attempt 1/6. Payload: {
+  "clientId": "xaxrS3eVpsfmynTJSuTFcdv2VgY8bF06",
+  "clientSecret": "bWSQaHXKqAi8cn5MjsMBxWKdwQj6XyWcKsYJvPchX4dNHCrJyCDkdeS9gzXkzvIJ",
+  "userAccessType": "TOAST_MACHINE_CLIENT"
+}
+2025-06-19 16:32:36,301 - toast-client - INFO - Auth response status: 200
+2025-06-19 16:32:36,301 - toast-client - INFO - Auth token response keys: @class, token, status
+2025-06-19 16:32:36,301 - toast-client - INFO - Successfully retrieved new token, valid until: 2025-06-20 11:37:00
+2025-06-19 16:32:36,303 - toast-tips - INFO - Fetching all employees from Toast API...
+2025-06-19 16:32:36,303 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/labor/v1/employees
+2025-06-19 16:32:36,303 - toast-client - INFO - Request method: GET
+2025-06-19 16:32:36,303 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:36,303 - toast-client - INFO - Request parameters: None
+2025-06-19 16:32:36,303 - toast-client - INFO - Request data: None
+2025-06-19 16:32:36,303 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/labor/v1/employees
+2025-06-19 16:32:37,090 - toast-client - INFO - Response status: 200
+2025-06-19 16:32:37,094 - toast-tips - INFO - Successfully mapped 307 employees
+2025-06-19 16:32:37,094 - toast-tips - INFO - Processing 682 orders for tips and server sales...
+2025-06-19 16:32:37,098 - toast-client - INFO - Reloading config module to get latest configuration
+2025-06-19 16:32:37,099 - toast-config - INFO - Config module loaded. Raw TOAST_LOCATION_INDEX from environment: '1'
+2025-06-19 16:32:37,099 - toast-config - INFO - Parsed location_index as integer: 1
+2025-06-19 16:32:37,099 - toast-config - INFO - Using TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1 from LOCATION_GUID_MAP for location index 1
+2025-06-19 16:32:37,099 - toast-config - INFO - Config module initialized successfully with TOAST_RESTAURANT_GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:37,099 - toast-client - INFO - Initializing Toast API client with restaurant GUID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:37,099 - toast-client - INFO - Attempting to fetch new authentication token from Toast API...
+2025-06-19 16:32:37,099 - toast-client - INFO - Using auth URL: https://ws-api.toasttab.com/authentication/v1/authentication/login
+2025-06-19 16:32:37,099 - toast-client - INFO - Authentication attempt 1/6. Payload: {
+  "clientId": "xaxrS3eVpsfmynTJSuTFcdv2VgY8bF06",
+  "clientSecret": "bWSQaHXKqAi8cn5MjsMBxWKdwQj6XyWcKsYJvPchX4dNHCrJyCDkdeS9gzXkzvIJ",
+  "userAccessType": "TOAST_MACHINE_CLIENT"
+}
+2025-06-19 16:32:37,740 - toast-client - INFO - Auth response status: 200
+2025-06-19 16:32:37,740 - toast-client - INFO - Auth token response keys: @class, token, status
+2025-06-19 16:32:37,740 - toast-client - INFO - Successfully retrieved new token, valid until: 2025-06-20 11:37:00
+2025-06-19 16:32:37,742 - toast-tips - INFO - Fetching time entries for date range: 2025-06-14 to 2025-06-15
+2025-06-19 16:32:37,742 - toast-client - INFO - Request URL: https://ws-api.toasttab.com/labor/v1/timeEntries
+2025-06-19 16:32:37,742 - toast-client - INFO - Request method: GET
+2025-06-19 16:32:37,742 - toast-client - INFO - Request headers: Authorization: Bearer eyJhbGciOi..., Toast-Restaurant-External-ID: 8a3b1856-f4ed-4f13-8f64-6349fbffe1f1
+2025-06-19 16:32:37,742 - toast-client - INFO - Request parameters: {
+  "startDate": "2025-06-14T00:00:00.000Z",
+  "endDate": "2025-06-15T23:59:59.999Z",
+  "includeArchived": "true",
+  "includeMissedBreaks": "true"
+}
+2025-06-19 16:32:37,742 - toast-client - INFO - Request data: None
+2025-06-19 16:32:37,742 - toast-client - INFO - API Call Attempt 1/6 to https://ws-api.toasttab.com/labor/v1/timeEntries
+2025-06-19 16:32:38,398 - toast-client - INFO - Response status: 200
+2025-06-19 16:32:38,403 - toast-tips - INFO - Retrieved 126 time entries from Toast API
+2025-06-19 16:32:38,403 - toast-tips - INFO - Processed time entries for 3 days
+2025-06-19 16:32:38,404 - toast-tips - INFO - Fetched 126 time entries for 3 days
+2025-06-19 16:32:38,404 - toast-tips - INFO - Total regular hours: 784.13
+2025-06-19 16:32:38,404 - toast-tips - INFO - Total overtime hours: 155.64
+2025-06-19 16:32:38,404 - toast-tips - INFO - Processed 682 orders and 698 payments
+2025-06-19 16:32:38,404 - toast-tips - INFO - Found tips in 418 orders across 2 days
+2025-06-19 16:32:38,404 - toast-tips - INFO - Total tips: $11598.26
+2025-06-19 16:32:38,404 - toast-tips - INFO - Found sales data for 19 unique servers
+2025-06-19 16:32:38,404 - toast-tips - INFO - Total server sales: $73020.50
+2025-06-19 16:32:38,404 - toast-tips - INFO - 
+================================================================================
+2025-06-19 16:32:38,404 - toast-tips - INFO - TIPS BY DATE
+2025-06-19 16:32:38,404 - toast-tips - INFO - ================================================================================
+2025-06-19 16:32:38,404 - toast-tips - INFO - 2025-06-14: $5808.92
+2025-06-19 16:32:38,404 - toast-tips - INFO - 2025-06-15: $5789.34
+2025-06-19 16:32:38,404 - toast-tips - INFO - 
+Total Tips: $11598.26
+2025-06-19 16:32:38,404 - toast-tips - INFO - 
+================================================================================
+2025-06-19 16:32:38,405 - toast-tips - INFO - SALES BY SERVER
+2025-06-19 16:32:38,405 - toast-tips - INFO - ================================================================================
+2025-06-19 16:32:38,405 - toast-tips - INFO - 6050 Bar Cashier 1 (0abc83d2-7761-4322-9c32-9f7849470cca) [ID: 6050]: Sales: $10472.94, Tips: $1970.86
+2025-06-19 16:32:38,405 - toast-tips - INFO - Floradena Bayangos (181ef487-14b8-443f-8750-0172f8ff0351) [ID: 142]: Sales: $7451.96, Tips: $875.28
+2025-06-19 16:32:38,405 - toast-tips - INFO - 9090 Host Cashier (24a56904-4cd2-477c-af77-e8cfbd26a682) [ID: 9090]: Sales: $1849.77, Tips: $139.56
+2025-06-19 16:32:38,405 - toast-tips - INFO - Michelle Kenney (2c87b023-066d-4e15-9e0c-b5915bbdd1f7) [ID: 105]: Sales: $2603.79, Tips: $453.23
+2025-06-19 16:32:38,405 - toast-tips - INFO - Emon Chienelo (359b9111-8bf2-4e5b-bec7-918f571295e8) [ID: 102]: Sales: $8438.15, Tips: $1384.19
+2025-06-19 16:32:38,405 - toast-tips - INFO - Marisol Lopez Luna (463f3365-7572-4805-9681-695fd47fa960) [ID: 300]: Sales: $315.73, Tips: $17.00
+2025-06-19 16:32:38,405 - toast-tips - INFO - Ignacio Rodas (467ad023-a777-43e6-9bb6-468214b8fa77) [ID: 201]: Sales: $3557.88, Tips: $529.22
+2025-06-19 16:32:38,405 - toast-tips - INFO - Tyler (4b1f1f8e-89e6-4f91-8f80-df314612ee89) [ID: 321]: Sales: $141.60, Tips: $25.00
+2025-06-19 16:32:38,405 - toast-tips - INFO - Erin Fuller (50762265-8d9f-4453-886c-e287404450db) [ID: 177]: Sales: $2509.74, Tips: $437.39
+2025-06-19 16:32:38,405 - toast-tips - INFO - Natasha Call (572329b0-24ea-41c1-a9df-cf4d94940675) [ID: 179]: Sales: $5965.01, Tips: $996.37
+2025-06-19 16:32:38,405 - toast-tips - INFO - Gary Mendoza (68350e54-999d-41a4-a942-35ae94512b4b) [ID: 109]: Sales: $3211.37, Tips: $567.72
+2025-06-19 16:32:38,405 - toast-tips - INFO - Andrew Lopez (74c1873b-2b1e-436d-b08e-9bc03b863dca) [ID: 317]: Sales: $10204.58, Tips: $1734.54
+2025-06-19 16:32:38,405 - toast-tips - INFO - Alicia Leal (798c93ad-b0fb-4a6f-96be-4bba5c553958) [ID: 143]: Sales: $2475.13, Tips: $380.72
+2025-06-19 16:32:38,405 - toast-tips - INFO - Alma Ramos (9d9f84e0-af5b-4b73-8131-09635a4a8f20) [ID: 288]: Sales: $3106.98, Tips: $504.33
+2025-06-19 16:32:38,405 - toast-tips - INFO - 6051 Bar Cashier 2 (a1f8db27-71f9-4078-8b2f-88921d65bd23) [ID: 6051]: Sales: $2486.30, Tips: $344.62
+2025-06-19 16:32:38,405 - toast-tips - INFO - Ken Hansen (a3c83450-b0ea-43a2-9273-55764dda9ec3): Sales: $328.69, Tips: $40.00
+2025-06-19 16:32:38,405 - toast-tips - INFO - Jace Taylor (d054bda4-7675-4c58-b326-18d3a935b88d) [ID: 226]: Sales: $4002.41, Tips: $714.60
+2025-06-19 16:32:38,405 - toast-tips - INFO - Oscar Javier Montoya (e21be0dd-e142-4103-95d3-28e09a193f3a) [ID: 328]: Sales: $656.38, Tips: $100.06
+2025-06-19 16:32:38,405 - toast-tips - INFO - Lilliana Caruso (fc88a17a-ac05-4dd6-907c-8acbefb56d61) [ID: 106]: Sales: $3242.09, Tips: $329.50
+2025-06-19 16:32:38,405 - toast-tips - INFO - 
+Total Server Sales: $73020.50
+2025-06-19 16:32:38,406 - toast-tips - INFO - 
+================================================================================
+2025-06-19 16:32:38,406 - toast-tips - INFO - TIME ENTRIES BY DATE
+2025-06-19 16:32:38,406 - toast-tips - INFO - ================================================================================
+2025-06-19 16:32:38,406 - toast-tips - INFO - Total Time Entries: 126
+2025-06-19 16:32:38,406 - toast-tips - INFO - Total Regular Hours: 784.13
+2025-06-19 16:32:38,406 - toast-tips - INFO - Total Overtime Hours: 155.64
+2025-06-19 16:32:38,406 - toast-tips - INFO - Days with Time Entries: 3
+2025-06-19 16:32:38,406 - toast-tips - INFO - 
+2025-06-13:
+2025-06-19 16:32:38,406 - toast-tips - INFO -   Danely  Ortiz Guzman: 00:35-06:21 (5.78h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   Danely  Ortiz Guzman: 06:21-N/A (0.00h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   Juan Carlos Vasquez: 00:04-07:00 (6.39h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   Day Total: 12.17 hours
+2025-06-19 16:32:38,406 - toast-tips - INFO - 
+2025-06-14:
+2025-06-19 16:32:38,406 - toast-tips - INFO -   6050 Bar Cashier 1: 16:34-06:58 (0.00h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   6051 Bar Cashier 2: 16:39-06:53 (0.00h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   9090 Host Cashier: 16:40-07:10 (0.00h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   Amariliz Rivera: 14:20-22:46 (7.93h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   Andrew Lopez: 15:59-06:31 (8.00h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   Ariel Tirado: 22:16-06:44 (7.95h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   Blake Goeppert: 18:37-23:49 (5.20h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   Braulio Vazquez: 13:57-22:09 (7.68h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   Caleb: 16:33-22:58 (5.80h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   Carlos Salvador Ornelas: 14:04-22:06 (7.41h)
+2025-06-19 16:32:38,406 - toast-tips - INFO -   Cristhian  Moyado: 22:01-06:23 (7.80h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Danely  Ortiz Guzman: 00:18-06:14 (5.93h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   David Baltodano: 18:32-23:23 (4.85h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Didier Pina: 14:00-22:00 (7.44h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Edwin: 22:27-07:10 (8.00h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Edy Flores: 15:30-23:03 (7.03h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Emily  Bamaca: 22:32-06:50 (7.80h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Emon Chienelo: 21:57-06:53 (8.00h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Erick Median : 14:00-22:00 (7.50h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Erik Fernandez: 22:58-05:44 (6.25h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Erin Fuller: 21:57-06:20 (7.86h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Floradena Bayangos: 22:30-06:38 (7.63h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Gary Mendoza: 16:30-23:59 (6.93h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   George Ortez: 22:57-06:17 (6.83h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Gloria Martinez Flores: 17:07-22:00 (4.89h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Gustavo Adolfo  Maradiaga: 22:30-08:27 (8.00h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Ignacio Escamilla: 21:59-04:59 (6.45h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Irma Moreno: 17:29-23:19 (5.84h)
+2025-06-19 16:32:38,407 - toast-tips - INFO -   Issouf  Ganou: 22:57-08:28 (8.00h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Javier Lopez Tirado: 22:57-06:30 (7.05h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Jeferson Espinoza Zavala: 13:20-21:36 (7.71h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Jose David Tec Rivero: 17:31-22:58 (4.96h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Jose Lucas Canul: 22:36-06:31 (7.39h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Josias Suarez: 22:00-08:03 (8.00h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Juan Carlos Vasquez: 22:34-06:48 (7.71h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Juan Uriel Urbano Carmona: 14:00-23:03 (8.00h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Julio Vazquez: 22:11-06:55 (8.00h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   KDS Expo: 14:59-06:43 (0.00h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Kelin Estefany Euceda Cruz: 00:08-06:33 (5.92h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Kimberly Salcedo: 22:59-07:33 (8.00h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Lilliana Caruso: 16:57-00:26 (6.90h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Luis A: 22:31-07:45 (8.00h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Luis Mendoza: 22:32-06:31 (7.46h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Maria Draguta: 16:06-22:12 (5.60h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Mario de Jesus  Carballo: 23:46-06:42 (6.38h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Marisol Lopez Luna: 15:30-22:30 (6.50h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Marvin  Lopez: 23:00-06:49 (7.29h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Matias Burgoz: 15:32-23:40 (7.60h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Michelle Kenney: 16:01-23:43 (7.10h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Natasha Call: 22:30-07:05 (8.00h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Rafael Carlos: 15:31-22:34 (6.48h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Randy Manuel Chi Hernandez: 16:36-22:29 (5.87h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Ruth Marcela Romero Elvir: 21:05-05:07 (7.51h)
+2025-06-19 16:32:38,408 - toast-tips - INFO -   Segundo Carlos: 15:31-22:34 (6.45h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Sergio Canche: 17:57-22:33 (4.60h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Sergio Lopez Fernandez: 22:41-07:44 (8.00h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Talia Andrade: 14:05-22:37 (8.00h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Tyler: 22:58-07:06 (7.62h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Ursi Choc: 16:01-00:24 (7.88h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Wilson: 13:59-20:49 (6.33h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Yelix Giron Ramirez: 17:27-22:41 (5.24h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Day Total: 400.55 hours
+2025-06-19 16:32:38,409 - toast-tips - INFO - 
+2025-06-15:
+2025-06-19 16:32:38,409 - toast-tips - INFO -   6050 Bar Cashier 1: 17:22-06:42 (0.00h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   6051 Bar Cashier 2: 17:22-05:44 (0.00h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   9090 Host Cashier: 17:26-06:53 (0.00h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Alicia Leal: 22:27-04:05 (5.12h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Alma Ramos: 16:30-00:10 (7.17h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Amariliz Rivera: 14:33-22:21 (7.29h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Andrew Lopez: 16:34-00:14 (7.15h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Ariel Tirado: 17:04-23:32 (6.47h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Blake Goeppert: 15:28-23:36 (7.57h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Carlos Salvador Ornelas: 14:07-22:00 (7.37h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Cristhian  Moyado: 21:31-05:29 (3.59h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   David Baltodano: 17:29-22:31 (5.03h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Didier Pina: 14:09-22:09 (7.45h)
+2025-06-19 16:32:38,409 - toast-tips - INFO -   Edwin: 21:59-06:41 (8.00h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Edy Flores: 16:33-23:31 (6.47h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Emily  Bamaca: 23:00-06:04 (6.53h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Emon Chienelo: 22:28-06:03 (7.08h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Erick Median : 14:07-22:03 (7.43h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Erik Fernandez: 22:58-06:51 (7.36h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Fabiola Rivera: 15:59-17:07 (1.13h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Floradena Bayangos: 21:57-06:20 (7.87h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Francisco: 17:10-22:19 (5.16h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   George Ortez: 23:01-05:29 (5.01h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Gloria Martinez Flores: 16:27-21:46 (5.31h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Guadalupe Can Chan: 13:27-21:29 (7.52h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Gustavo Adolfo  Maradiaga: 22:36-07:31 (8.00h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Hugo Ojeda: 22:29-04:40 (6.19h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Ignacio Escamilla: 22:58-04:55 (5.96h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Ignacio Rodas: 16:29-23:57 (6.94h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Irma Moreno: 17:29-22:37 (5.14h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Issouf  Ganou: 23:06-07:31 (7.87h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Jace Taylor: 15:57-00:17 (7.83h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Jeferson Espinoza Zavala: 13:31-21:16 (7.20h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Jose David Tec Rivero: 19:00-06:38 (8.00h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Josias Suarez: 22:56-06:21 (3.80h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Juan Carlos Vasquez: 22:30-06:00 (6.93h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Juan Uriel Urbano Carmona: 14:02-22:47 (2.62h)
+2025-06-19 16:32:38,410 - toast-tips - INFO -   Julio Vazquez: 22:30-06:05 (7.05h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   KDS Expo: 16:39-06:44 (0.00h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Kimberly Salcedo: 21:57-06:57 (8.00h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Liliana Rodriguez Parada: 21:58-06:19 (7.84h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Luis A: 22:27-04:04 (4.90h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Luis Mendoza: 22:30-06:21 (3.96h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Mario de Jesus  Carballo: 14:52-22:42 (7.33h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Marisol Lopez Luna: 16:17-23:05 (5.10h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Martino  Hernandez: 17:27-22:01 (4.57h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Marvin  Lopez: 23:00-06:17 (6.78h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Matias Burgoz: 15:29-23:23 (7.39h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Melisa Euan: 22:30-05:56 (6.13h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Natasha Call: 21:59-06:22 (7.88h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Oscar Miguel: 14:05-22:56 (8.00h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Pedro Lopez: 23:07-06:18 (6.62h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Rafael Carlos: 15:29-22:34 (6.58h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Ruth Marcela Romero Elvir: 21:07-04:27 (2.37h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Segundo Carlos: 15:32-22:23 (6.29h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Sergio Canche: 22:59-06:49 (7.33h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Sergio Lopez Fernandez: 22:23-07:31 (8.00h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Tyler: 23:31-07:41 (7.64h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Ursi Choc: 14:16-00:20 (7.54h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Wilson: 14:04-22:14 (7.63h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Yelix Giron Ramirez: 22:02-03:11 (4.64h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   gerardo garcia vela: 15:47-22:35 (6.28h)
+2025-06-19 16:32:38,411 - toast-tips - INFO -   Day Total: 371.41 hours
+2025-06-19 16:32:38,414 - toast-tips - INFO - 
+Tips, server sales, and time entries data saved to tips_sample.json
+2025-06-19 16:32:38,414 - toast-tips - INFO - Operation completed successfully.
+2025-06-19 16:32:38,414 - toast-tips - INFO - ================================================================================

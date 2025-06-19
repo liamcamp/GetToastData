@@ -123,6 +123,69 @@ def process_orders(task_id: str, params: Dict):
         del tasks[task_id]
         logger.info(f"Task {task_id} cleaned up")
 
+def process_tips(task_id: str, params: Dict):
+    """Process tips in background thread"""
+    try:
+        logger.info(f"Starting tips task {task_id} with params: {params}")
+        
+        # Set up environment and arguments
+        os.environ['TOAST_LOCATION_INDEX'] = str(params['location_index'])
+        logger.info(f"Setting location index to {params['location_index']}")
+        
+        # Import get_tips after setting environment variable
+        import get_tips
+        
+        # Set up sys.argv for get_tips
+        sys.argv = ['get_tips.py']
+        if params['start_date'] and params['end_date']:
+            sys.argv.extend(['--dates', params['start_date'], params['end_date']])
+        
+        # Handle webhook parameter - it should be the actual webhook URL
+        if params.get('webhook_url'):
+            sys.argv.extend(['--response-webhook-url', params['webhook_url']])
+        
+        logger.info(f"Running get_tips.main() with args: {sys.argv}")
+        
+        # Run the main function
+        get_tips.main()
+        
+        logger.info(f"Tips task {task_id} completed successfully")
+        
+        # Store success result
+        task_results[task_id] = {
+            'status': 'completed',
+            'message': 'Tips processing completed successfully',
+            'parameters': params,
+            'completed_at': datetime.utcnow().isoformat()
+        }
+        
+    except Exception as e:
+        error_msg = str(e)
+        error_traceback = traceback.format_exc()
+        logger.error(f"Error in tips task {task_id}: {error_msg}")
+        logger.error(f"Traceback: {error_traceback}")
+        
+        # Send error to webhook
+        send_error_to_webhook(
+            error_msg=error_msg,
+            error_traceback=error_traceback,
+            context=f"tips_task_{task_id}"
+        )
+        
+        # Store error result
+        task_results[task_id] = {
+            'status': 'failed',
+            'error': error_msg,
+            'traceback': error_traceback,
+            'parameters': params,
+            'failed_at': datetime.utcnow().isoformat()
+        }
+    
+    # Clean up task
+    if task_id in tasks:
+        del tasks[task_id]
+        logger.info(f"Tips task {task_id} cleaned up")
+
 @app.route('/run', methods=['POST'])
 def run_orders():
     try:
@@ -214,6 +277,96 @@ def run_orders():
             error_msg=error_msg,
             error_traceback=error_traceback,
             context="run_endpoint"
+        )
+        
+        return jsonify({
+            'error': error_msg,
+            'traceback': error_traceback
+        }), 500
+
+@app.route('/tips', methods=['POST'])
+def run_tips():
+    try:
+        logger.info(f"Received request to /tips endpoint from {request.remote_addr}")
+        logger.info(f"Request data: {request.get_json()}")
+        # Get JSON payload
+        data = request.get_json()
+        
+        # Extract parameters
+        start_date = data.get('startDate')
+        end_date = data.get('endDate')
+        webhook_url = data.get('webhook')  # This should be the actual webhook URL
+        location_index = data.get('locationIndex', 1)  # Default to 1 if not provided
+        
+        # Validate dates
+        if not start_date or not end_date:
+            return jsonify({
+                'error': 'Missing required parameters: startDate and endDate'
+            }), 400
+        
+        # Validate webhook URL
+        if not webhook_url or not isinstance(webhook_url, str):
+            return jsonify({
+                'error': 'Missing or invalid webhook URL - webhook parameter must be a string URL'
+            }), 400
+            
+        # Validate location index
+        try:
+            location_index = int(location_index)
+            if location_index < 1 or location_index > 5:
+                return jsonify({
+                    'error': 'locationIndex must be between 1 and 5'
+                }), 400
+        except (TypeError, ValueError):
+            return jsonify({
+                'error': 'locationIndex must be a valid integer between 1 and 5'
+            }), 400
+        
+        # Generate task ID
+        task_id = str(uuid.uuid4())
+        
+        # Store parameters
+        params = {
+            'start_date': start_date,
+            'end_date': end_date,
+            'webhook_url': webhook_url,
+            'location_index': location_index
+        }
+        
+        # Create and start background thread
+        thread = threading.Thread(
+            target=process_tips,
+            args=(task_id, params),
+            daemon=True
+        )
+        tasks[task_id] = {
+            'thread': thread,
+            'started_at': datetime.utcnow().isoformat(),
+            'parameters': params
+        }
+        thread.start()
+        
+        logger.info(f"Started tips task {task_id} with params {params}")
+        
+        # Return immediate response with task ID
+        return jsonify({
+            'status': 'processing',
+            'message': 'Tips processing started',
+            'task_id': task_id,
+            'parameters': params
+        })
+        
+    except Exception as e:
+        error_msg = str(e)
+        error_traceback = traceback.format_exc()
+        logger.error(f"Error in /tips endpoint: {error_msg}")
+        logger.error(f"Traceback: {error_traceback}")
+        
+        # Send error to webhook
+        send_error_to_webhook(
+            error_msg=error_msg,
+            error_traceback=error_traceback,
+            context="tips_endpoint"
         )
         
         return jsonify({

@@ -7,8 +7,8 @@ This script provides high-level control and configuration testing functionality.
 import sys
 import argparse
 import datetime
-from toast_client import ToastAPIClient
-from get_orders import process_orders_data, send_data_to_webhook
+from server.toast_client import ToastAPIClient
+from functions.get_orders.get_orders import process_orders_data, send_data_to_webhook
 
 def test_configuration():
     """Test the Toast API configuration and authentication."""
@@ -24,7 +24,7 @@ def test_configuration():
         
         # Test webhook configuration
         try:
-            from config import WEBHOOK_URL
+            from config.config import WEBHOOK_URL
             print(f"\nWebhook URL is configured: {WEBHOOK_URL}")
         except (ImportError, AttributeError):
             print("\nWarning: Webhook URL not found in config.py, will use default URL")

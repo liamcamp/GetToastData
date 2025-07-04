@@ -114,10 +114,10 @@ def validate_request_data(data):
     
     return True, None
 
-def run_get_tips_script(task_id: str, params: dict):
-    """Run get_tips.py script in background"""
+def run_get_tips_script(task_id: str, params: dict, synchronous: bool = False):
+    """Run get_tips.py script in background or synchronously"""
     
-    logger.info(f"Starting tips task {task_id} with params: {params}")
+    logger.info(f"Starting tips task {task_id} with params: {params}, synchronous: {synchronous}")
     
     try:
         # Set environment variable
@@ -128,9 +128,14 @@ def run_get_tips_script(task_id: str, params: dict):
         cmd = [
             sys.executable,
             'functions/get_tips/get_tips.py',
-            '--dates', params['start_date'], params['end_date'],
-            '--response-webhook-url', params['webhook_url']
+            '--dates', params['start_date'], params['end_date']
         ]
+        
+        # Add synchronous flag if requested
+        if synchronous:
+            cmd.append('--synchronous')
+        else:
+            cmd.extend(['--response-webhook-url', params['webhook_url']])
         
         logger.info(f"Running command: {' '.join(cmd)}")
         logger.info(f"Environment TOAST_LOCATION_INDEX: {env.get('TOAST_LOCATION_INDEX')}")
@@ -139,28 +144,63 @@ def run_get_tips_script(task_id: str, params: dict):
         log_file = Path("logs") / f"task_{task_id}.log"
         
         # Run the command
-        with open(log_file, 'w') as log_f:
+        if synchronous:
+            # For synchronous requests, capture stdout separately
             process = subprocess.run(
                 cmd,
                 env=env,
-                stdout=log_f,
-                stderr=subprocess.STDOUT,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
                 text=True,
                 timeout=600  # 10 minute timeout
             )
-        
-        # Read the log file to get output
-        with open(log_file, 'r') as log_f:
-            output = log_f.read()
+            
+            # Write stderr to log file
+            with open(log_file, 'w') as log_f:
+                log_f.write(process.stderr)
+            
+            output = process.stderr
+            stdout_output = process.stdout
+        else:
+            # For asynchronous requests, log everything to file
+            with open(log_file, 'w') as log_f:
+                process = subprocess.run(
+                    cmd,
+                    env=env,
+                    stdout=log_f,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    timeout=600  # 10 minute timeout
+                )
+            
+            # Read the log file to get output
+            with open(log_file, 'r') as log_f:
+                output = log_f.read()
+            stdout_output = ""
         
         if process.returncode == 0:
             logger.info(f"Tips task {task_id} completed successfully")
+            
+            # For synchronous requests, parse the JSON output from stdout
+            result_data = None
+            if synchronous and stdout_output:
+                try:
+                    # Look for JSON output in stdout
+                    lines = stdout_output.split('\n')
+                    for line in lines:
+                        if line.strip().startswith('{') and '"tips_by_date"' in line:
+                            result_data = json.loads(line.strip())
+                            break
+                except json.JSONDecodeError:
+                    logger.warning("Could not parse JSON from synchronous output")
+            
             task_results[task_id] = {
                 'status': 'completed',
                 'message': 'Tips processing completed successfully',
                 'output': output[-1000:],  # Last 1000 chars
                 'log_file': str(log_file),
-                'completed_at': datetime.now().isoformat()
+                'completed_at': datetime.now().isoformat(),
+                'data': result_data  # Include parsed data for synchronous requests
             }
         else:
             logger.error(f"Tips task {task_id} failed with return code {process.returncode}")
@@ -336,17 +376,36 @@ def process_tips():
         data = request.get_json()
         logger.info(f"Request data: {json.dumps(data, indent=2)}")
         
-        is_valid, error_msg = validate_request_data(data)
-        if not is_valid:
+        # Check if synchronous request
+        is_synchronous = data.get('synchronous', False)
+        
+        # For synchronous requests, webhook is not required
+        if is_synchronous:
+            required_fields = ['startDate', 'endDate']
+        else:
+            required_fields = ['startDate', 'endDate', 'webhook']
+        
+        missing_fields = [field for field in required_fields if not data.get(field)]
+        if missing_fields:
+            error_msg = f"Missing required fields: {', '.join(missing_fields)}"
             logger.warning(f"Invalid request: {error_msg}")
             return jsonify({'error': error_msg}), 400
+        
+        # Validate location index
+        location_index = data.get('locationIndex', 1)
+        try:
+            location_index = int(location_index)
+            if location_index < 1 or location_index > 5:
+                return jsonify({'error': 'locationIndex must be between 1 and 5'}), 400
+        except (ValueError, TypeError):
+            return jsonify({'error': 'locationIndex must be a valid integer'}), 400
         
         # Extract parameters
         params = {
             'start_date': data['startDate'],
             'end_date': data['endDate'],
-            'webhook_url': data['webhook'],
-            'location_index': int(data.get('locationIndex', 1))
+            'webhook_url': data.get('webhook', ''),
+            'location_index': location_index
         }
         
         # Generate task ID
@@ -357,26 +416,55 @@ def process_tips():
             'params': params,
             'started_at': datetime.now().isoformat(),
             'client_ip': client_ip,
-            'type': 'tips'
+            'type': 'tips',
+            'synchronous': is_synchronous
         }
         
-        # Start background thread
-        thread = threading.Thread(
-            target=run_get_tips_script,
-            args=(task_id, params),
-            daemon=True
-        )
-        thread.start()
-        
-        request_time = (time.time() - request_start) * 1000
-        logger.info(f"Task {task_id} started successfully in {request_time:.1f}ms")
-        
-        return jsonify({
-            'status': 'processing',
-            'task_id': task_id,
-            'message': 'Tips processing started',
-            'params': params
-        })
+        if is_synchronous:
+            # Handle synchronous request - run in the current thread
+            logger.info(f"Processing synchronous tips request {task_id}")
+            
+            # Run the script synchronously
+            run_get_tips_script(task_id, params, synchronous=True)
+            
+            # Get the result
+            if task_id in task_results:
+                result = task_results[task_id]
+                if result['status'] == 'completed' and result.get('data'):
+                    # Return the tips data directly
+                    request_time = (time.time() - request_start) * 1000
+                    logger.info(f"Synchronous task {task_id} completed in {request_time:.1f}ms")
+                    return jsonify(result['data'])
+                else:
+                    # Return error if failed
+                    return jsonify({
+                        'error': result.get('error', 'Unknown error'),
+                        'task_id': task_id,
+                        'output': result.get('output', '')
+                    }), 500
+            else:
+                return jsonify({
+                    'error': 'Task result not found',
+                    'task_id': task_id
+                }), 500
+        else:
+            # Handle asynchronous request - run in background thread
+            thread = threading.Thread(
+                target=run_get_tips_script,
+                args=(task_id, params, False),
+                daemon=True
+            )
+            thread.start()
+            
+            request_time = (time.time() - request_start) * 1000
+            logger.info(f"Task {task_id} started successfully in {request_time:.1f}ms")
+            
+            return jsonify({
+                'status': 'processing',
+                'task_id': task_id,
+                'message': 'Tips processing started',
+                'params': params
+            })
         
     except Exception as e:
         error_msg = f"Error in /tips endpoint: {str(e)}"

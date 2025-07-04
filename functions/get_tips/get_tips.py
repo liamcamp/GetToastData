@@ -83,7 +83,7 @@ def send_data_to_webhook(processed_data, webhook_url=None):
     """
     # Default webhook URL if none provided
     if webhook_url is None:
-        webhook_url = "https://originaljoes.app.n8n.cloud/webhook/57938ed1-012b-47f7-8adf-3614117ae333"
+        webhook_url = "https://originaljoes.app.n8n.cloud/webhook/e9845154-f26f-461d-9e5f-b2e32d06b66d"
     
     logger.info(f"Sending tips data to webhook: {webhook_url}")
     
@@ -130,13 +130,14 @@ def parse_args():
     parser.add_argument('--output-file', dest='output', help='File to save tips and server data')
     parser.add_argument('--webhook', action='store_true', help='Send processed data to webhook')
     parser.add_argument('--response-webhook-url', dest='response_webhook_url', help='Webhook URL to send the response data to')
+    parser.add_argument('--synchronous', action='store_true', help='Return JSON data to stdout instead of sending to webhook')
     parser.add_argument('--debug', action='store_true', help='Enable detailed debugging output')
     
     args = parser.parse_args()
     
     # Validate that at least one output method is specified
-    if not args.output and not args.webhook and not args.response_webhook_url:
-        parser.error("Must specify either --output-file, --webhook, or --response-webhook-url (or multiple)")
+    if not args.output and not args.webhook and not args.response_webhook_url and not args.synchronous:
+        parser.error("Must specify either --output-file, --webhook, --response-webhook-url, or --synchronous (or multiple)")
     
     # Set location index in environment if provided and not already set
     if args.location_index and not os.getenv('TOAST_LOCATION_INDEX'):
@@ -390,6 +391,11 @@ def fetch_and_process_time_entries(client, date_range, employee_mapping, sales_b
                 logger.warning(f"Invalid business date format: {business_date}")
                 continue
             
+            # Filter out entries that fall outside the requested date range
+            if formatted_date < date_range['start_date'] or formatted_date > date_range['end_date']:
+                logger.debug(f"Skipping time entry for {formatted_date} as it falls outside requested range {date_range['start_date']} to {date_range['end_date']}")
+                continue
+            
             # Extract employee information
             employee_ref = entry.get('employeeReference', {})
             employee_guid = employee_ref.get('guid')
@@ -466,6 +472,31 @@ def fetch_and_process_time_entries(client, date_range, employee_mapping, sales_b
             cashier_position_guid = "6c0920e7-c285-4fbd-b7df-5cb910737ff1"  # Cashier1
             loj_expo_position_guid = "6339f37d-0039-433f-aee7-6ee33d2cd40a"  # LOJ Expo
             
+            # Location index 3 specific position GUIDs
+            bar_cashier_position_guid = "021bdbad-b7ff-43da-a9a1-6982d6025922"  # Bar Cashier
+            host_cashier_position_guid = "ce03fbb1-0bc0-4edc-9ade-b330fe9bdc01"  # Host Cashier
+            server_position_guid = "38273a48-9624-4db3-b2cb-12c6d157cdad"  # Server
+            foh_supervisor_position_guid = "a7da3f8f-2e11-4415-88d6-0effec774f01"  # FOH Supervisor
+            
+            # Location index 4 (oj_nb) specific position GUIDs
+            loc4_bar_cashier_guid = "91391768-a7e3-489a-8c29-ff6ecf5b227b"  # Bar Cashier
+            loc4_bartender_guid = "91f56a2a-093c-47e3-a523-69473025ff2f"  # Bartender
+            loc4_busser_guid = "06a8860f-f234-4502-a7b2-0fe3e95eeaa7"  # Busser
+            loc4_host_cashier_guid = "fb1927e1-d607-42a9-8d57-8ef0170c8926"  # Host Cashier
+            loc4_runner_guid = "4ff5fe50-3669-4d95-9873-16a291e8de93"  # Runner
+            loc4_server_guid = "d937c0a8-363c-467a-bdcb-af34ef5c682f"  # Server
+            
+            # Location index 5 (oj_wl) specific position GUIDs
+            loc5_server_guid = "9a8684be-b5d1-4c2c-a816-68dfaf6f16ce"  # Server
+            loc5_busser_guid = "d6d40620-6525-47dc-8f15-4723c2939b47"  # Busser
+            loc5_host_guid = "1e63bd70-f6c6-474a-b7ab-ceb38c48862d"  # Host
+            loc5_runner_guid = "98957e46-284a-4d07-911e-9a6118659845"  # Runner
+            loc5_bartender_guid = "8df2204c-47f1-4057-9b9e-c2de19f43677"  # Bartender
+            loc5_bar_cashier_guid = "3cfe523c-030f-41d4-b148-6590f015ff8f"  # Bar Cashier
+            loc5_host_cashier_guid = "fe2f5f4c-0a0e-40ac-9aef-871f85941918"  # Host Cashier
+            loc5_bar_prep_guid = "42555df0-5a23-4279-b6e9-ca9f9b97bcff"  # Bar Prep
+            loc5_barback_guid = "15f9bfee-9cc1-44ee-8d26-2506299f2b33"  # Barback
+            
             sales = 0.0
             non_cash_tips = 0.0
             tax_amount = 0.0
@@ -473,10 +504,19 @@ def fetch_and_process_time_entries(client, date_range, employee_mapping, sales_b
             # Determine if we should include this position based on location index
             include_position = False
             if position_guid == server_job_guid:
-                # Always include servers
+                # Always include servers (legacy server job GUID)
                 include_position = True
             elif location_index == 2 and position_guid in [cashier_position_guid, loj_expo_position_guid]:
                 # Include cashiers and LOJ expo for location index 2
+                include_position = True
+            elif location_index == 3 and position_guid in [bar_cashier_position_guid, host_cashier_position_guid, server_position_guid, foh_supervisor_position_guid]:
+                # Include bar cashiers, host cashiers, servers, and FOH supervisors for location index 3
+                include_position = True
+            elif location_index == 4 and position_guid in [loc4_bar_cashier_guid, loc4_bartender_guid, loc4_busser_guid, loc4_host_cashier_guid, loc4_runner_guid, loc4_server_guid]:
+                # Include tip-earning positions for location index 4 (oj_nb)
+                include_position = True
+            elif location_index == 5 and position_guid in [loc5_server_guid, loc5_busser_guid, loc5_host_guid, loc5_runner_guid, loc5_bartender_guid, loc5_bar_cashier_guid, loc5_host_cashier_guid, loc5_bar_prep_guid, loc5_barback_guid]:
+                # Include tip-earning positions for location index 5 (oj_wl)
                 include_position = True
             
             if include_position:
@@ -593,6 +633,12 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
     else:
         logger.info(f"Using provided location index: {location_index}")
     
+    # Determine if we should override business dates for single-day queries
+    business_date_override = None
+    if date_range and date_range.get('start_date') == date_range.get('end_date'):
+        business_date_override = date_range['start_date']
+        logger.info(f"Single-day query detected, will override all business dates to: {business_date_override}")
+    
     # First try to get employee mapping from API
     server_guid_to_name = get_employee_mapping()
     
@@ -636,42 +682,16 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
         total_orders_processed += 1
         order_has_tips = False
         
-        # Extract date for grouping purposes - trust API date filtering like get_orders does
-        # Use the same robust date extraction as before, but only for grouping (not filtering)
-        order_date = None
-        
-        # First, try to get the business date from payments (most reliable for business reporting)
-        for check in order.get('checks', []):
-            for payment in check.get('payments', []):
-                if payment.get('paidBusinessDate'):
-                    # paidBusinessDate is in format YYYYMMDD, convert to YYYY-MM-DD
-                    business_date_str = str(payment['paidBusinessDate'])
-                    if len(business_date_str) == 8:
-                        order_date = f"{business_date_str[:4]}-{business_date_str[4:6]}-{business_date_str[6:8]}"
-                        break
-            if order_date:
-                break
-        
-        # Fall back to paidDate or openedDate if no business date found
-        if not order_date:
-            if order.get('paidDate'):
-                order_date = datetime.datetime.fromisoformat(order['paidDate'].replace('Z', '+00:00')).strftime('%Y-%m-%d')
-            elif order.get('openedDate'):
-                order_date = datetime.datetime.fromisoformat(order['openedDate'].replace('Z', '+00:00')).strftime('%Y-%m-%d')
-        
-        if not order_date:
-            logger.warning(f"Could not determine date for order {order.get('guid', 'unknown')}")
-            continue
-        
         # Process each check in the order
         for check in order.get('checks', []):
             # Calculate check-level tax using: Total Amount - Check Amount - Tips
             check_amount = float(check.get('amount', 0))
             check_total_amount = float(check.get('totalAmount', 0))
             
-            # Calculate total tips for this check
+            # Calculate total tips for this check and track the primary payment date
             check_tip_amount = 0.0
             check_server_guid = None
+            check_primary_date = None  # Track the date to use for tax assignment
             
             # Process each payment in the check
             for payment in check.get('payments', []):
@@ -679,6 +699,39 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
                 
                 # Skip voided payments
                 if payment.get('voidInfo') is not None:
+                    continue
+                
+                # Skip DENIED payments
+                if payment.get('paymentStatus') == 'DENIED':
+                    continue
+                
+                # Extract date for this specific payment - each payment can have its own date
+                payment_date = None
+                
+                # Check if we have a business date override (for single-day queries)
+                if business_date_override:
+                    payment_date = business_date_override
+                else:
+                    # First, try to get the business date from this payment (most reliable for business reporting)
+                    if payment.get('paidBusinessDate'):
+                        # paidBusinessDate is in format YYYYMMDD, convert to YYYY-MM-DD
+                        business_date_str = str(payment['paidBusinessDate'])
+                        if len(business_date_str) == 8:
+                            payment_date = f"{business_date_str[:4]}-{business_date_str[4:6]}-{business_date_str[6:8]}"
+                    
+                    # Fall back to this payment's paidDate if no business date found
+                    if not payment_date and payment.get('paidDate'):
+                        payment_date = datetime.datetime.fromisoformat(payment['paidDate'].replace('Z', '+00:00')).strftime('%Y-%m-%d')
+                    
+                    # Final fallback to order-level dates
+                    if not payment_date:
+                        if order.get('paidDate'):
+                            payment_date = datetime.datetime.fromisoformat(order['paidDate'].replace('Z', '+00:00')).strftime('%Y-%m-%d')
+                        elif order.get('openedDate'):
+                            payment_date = datetime.datetime.fromisoformat(order['openedDate'].replace('Z', '+00:00')).strftime('%Y-%m-%d')
+                
+                if not payment_date:
+                    logger.warning(f"Could not determine date for payment {payment.get('guid', 'unknown')} in order {order.get('guid', 'unknown')}")
                     continue
                 
                 # Extract tip amount and server info
@@ -690,31 +743,33 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
                 # (This may need adjustment based on actual Toast payment data structure)
                 employee_guid = server_guid  # Default to server GUID
                 
-                # Keep track of check totals
+                # Keep track of check totals and use the first valid payment date as the primary date
                 check_tip_amount += tip_amount
                 if employee_guid and not check_server_guid:
                     check_server_guid = employee_guid
+                if not check_primary_date:
+                    check_primary_date = payment_date
                 
                 if tip_amount > 0:
-                    tips_by_date[order_date] += tip_amount
+                    tips_by_date[payment_date] += tip_amount
                     order_has_tips = True
                     
                     # Track tips by employee and date if employee info is available
                     if employee_guid:
-                        tips_by_server_by_date[order_date][employee_guid] += tip_amount
+                        tips_by_server_by_date[payment_date][employee_guid] += tip_amount
                 
                 # Extract sales amount and track by employee and date
                 payment_amount = float(payment.get('amount', 0))
                 
                 if employee_guid and payment_amount > 0:
-                    sales_by_server_by_date[order_date][employee_guid] += payment_amount
+                    sales_by_server_by_date[payment_date][employee_guid] += payment_amount
             
             # Calculate check-level tax amount using correct method
             check_tax_amount = check_total_amount - check_amount - check_tip_amount
             
-            # Assign tax to the server who handled this check
-            if check_server_guid and check_tax_amount > 0:
-                tax_by_server_by_date[order_date][check_server_guid] += check_tax_amount
+            # Assign tax to the server who handled this check, using the primary payment date
+            if check_server_guid and check_tax_amount > 0 and check_primary_date:
+                tax_by_server_by_date[check_primary_date][check_server_guid] += check_tax_amount
         
         if order_has_tips:
             orders_with_tips += 1
@@ -763,6 +818,10 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
         sum(servers.values()) for servers in sales_by_server_by_date.values()
     )
     
+    # Initialize variables for declared cash tips
+    declared_cash_tips_by_date = defaultdict(float)
+    total_declared_cash_tips = 0.0
+    
     # Prepare result
     result = {
         'tips_by_date': {date: round(amount, 2) for date, amount in tips_by_date_sorted.items()},
@@ -797,9 +856,45 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
             # Add time entries data to result
             result['timeEntries'] = time_entries_data
             
+            # Process declared cash tips from time entries
+            if 'timeEntriesByDay' in time_entries_data:
+                for date, entries in time_entries_data['timeEntriesByDay'].items():
+                    for entry in entries:
+                        cash_tips_declared = entry.get('cashTipsDeclared', 0.0)
+                        if cash_tips_declared > 0:
+                            declared_cash_tips_by_date[date] += cash_tips_declared
+                            total_declared_cash_tips += cash_tips_declared
+                            
+                            # Add to tips_by_date for this date
+                            if date in result['tips_by_date']:
+                                result['tips_by_date'][date] += cash_tips_declared
+                            else:
+                                result['tips_by_date'][date] = cash_tips_declared
+                            
+                            # Add to total tips in summary
+                            result['summary']['total_tips'] += cash_tips_declared
+                            
+                            # Also add to server tips if we can identify the server
+                            employee_guid = entry.get('employeeGuid')
+                            if employee_guid:
+                                # Find the server in server_summary and update their tips
+                                for server_record in result['sales_by_server']:
+                                    if server_record['date'] == date and server_record['server_guid'] == employee_guid:
+                                        server_record['total_tips'] += cash_tips_declared
+                                        break
+            
+            # Round the updated tip amounts
+            result['tips_by_date'] = {date: round(amount, 2) for date, amount in result['tips_by_date'].items()}
+            result['summary']['total_tips'] = round(result['summary']['total_tips'], 2)
+            
+            # Add declared cash tips summary
+            result['summary']['total_declared_cash_tips'] = round(total_declared_cash_tips, 2)
+            result['summary']['declared_cash_tips_by_date'] = {date: round(amount, 2) for date, amount in declared_cash_tips_by_date.items()}
+            
             logger.info(f"Fetched {time_entries_data['summary']['totalTimeEntries']} time entries for {time_entries_data['summary']['daysWithTimeEntries']} days")
             logger.info(f"Total hours: {time_entries_data['summary'].get('totalHours', 0.0):.2f}")
             logger.info(f"Total payable hours: {time_entries_data['summary'].get('totalPayableHours', 0.0):.2f}")
+            logger.info(f"Total declared cash tips: ${total_declared_cash_tips:.2f}")
             if 'totalRegularHours' in time_entries_data['summary']:
                 logger.info(f"Legacy - Regular hours: {time_entries_data['summary']['totalRegularHours']:.2f}")
                 logger.info(f"Legacy - Overtime hours: {time_entries_data['summary']['totalOvertimeHours']:.2f}")
@@ -828,7 +923,12 @@ def process_tips_data(orders_data, location_index=None, date_range=None):
     
     logger.info(f"Processed {total_orders_processed} orders and {total_payments_processed} payments")
     logger.info(f"Found tips in {orders_with_tips} orders across {len(tips_by_date_sorted)} days")
-    logger.info(f"Total tips: ${total_tips:.2f}")
+    logger.info(f"Payment tips: ${total_tips:.2f}")
+    if total_declared_cash_tips > 0:
+        logger.info(f"Declared cash tips: ${total_declared_cash_tips:.2f}")
+        logger.info(f"Total tips (payment + declared cash): ${total_tips + total_declared_cash_tips:.2f}")
+    else:
+        logger.info(f"Total tips: ${total_tips:.2f}")
     unique_servers = len(set(record['server_guid'] for record in server_summary))
     logger.info(f"Found sales data for {unique_servers} unique servers across {len(server_summary)} server-day records")
     logger.info(f"Total server sales: ${total_server_sales:.2f}")
@@ -1081,6 +1181,10 @@ def main():
         # Send to response webhook if URL provided
         if args.response_webhook_url:
             send_data_to_webhook(processed_data, args.response_webhook_url)
+        
+        # Return JSON to stdout if synchronous
+        if args.synchronous:
+            print(json.dumps(processed_data))
         
         logger.info("Operation completed successfully.")
         logger.info("=" * 80)
